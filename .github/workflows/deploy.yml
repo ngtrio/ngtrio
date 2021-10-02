@@ -22,13 +22,23 @@ jobs:
         with:
           node-version: '14'
           
+      - name: Setup Git
+        env:
+          DEPLOY_SECRET: ${{ secrets.DEPLOY_SECRET }}
+        run: |
+          mkdir -p ~/.ssh
+          echo ${DEPLOY_SECRET} > ~/.ssh/id_rsa
+          chmod 400 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global user.email "ngtercet@protonmail.com"
+          git config --global user.name "Jaron"
+          
       - name: Setup Hexo
         run: |
           npm install hexo-cli -g
           npm install
         
       - name: Deploy
-        env: ${{ DEPLOY_SECRET }}
         run: |
           hexo clean
           hexo deploy
