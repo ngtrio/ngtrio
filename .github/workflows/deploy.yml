@@ -27,7 +27,7 @@ jobs:
           DEPLOY_SECRET: ${{ secrets.DEPLOY_SECRET }}
         run: |
           mkdir -p ~/.ssh
-          echo ${DEPLOY_SECRET} > ~/.ssh/id_rsa
+          echo "$DEPLOY_SECRET" > ~/.ssh/id_rsa
           chmod 400 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           git config --global user.email "ngtercet@protonmail.com"
