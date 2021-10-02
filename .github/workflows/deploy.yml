@@ -1,0 +1,34 @@
+name: auto deploy
+
+on:
+  push:
+    branches:
+    - main
+  workflow_dispatch:
+
+jobs:
+
+  build:
+  
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout to main
+      - uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+          
+      - name: Setup Hexo
+        run: |
+          npm install hexo-cli -g
+          npm install
+        
+      - name: Deploy
+        env: ${{ DEPLOY_SECRET }}
+        run: |
+          hexo clean
+          hexo deploy
