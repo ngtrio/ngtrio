@@ -29,13 +29,11 @@ tags:
     简单的说就是和变量、标识符等的搜索scope是一样的
     
 2. Associated Type
-    
-    Function0[RequiredType]
-    
-    Function1[GivenType, RequireType]
-    
-    Function1[GivenType, ???]
-    
+   
+   * Function0[RequiredType]
+   * Function1[GivenType, RequireType]
+   * Function1[GivenType, ???]  
+  
     隐式范围包括上述涉及到的类型的伴生对象，如果说上述类型是类型构造器，比如说RequiredType[T]，那么T的隐式范围同样会被搜索。GivenType, RequireType的父类/trait（如果有）的伴生对象同样也会被搜索。
 
 
