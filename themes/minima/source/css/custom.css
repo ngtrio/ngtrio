@@ -254,6 +254,9 @@ a.footer-link:focus {
 .stackoverflow {
   fill: #ca7516;
 }
+.zhihu {
+  fill: #49C0FB;
+}
 .nanobar {
   left: 0;
 }
