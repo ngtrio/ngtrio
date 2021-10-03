@@ -2,7 +2,7 @@
 title: Scala隐式转换的理解
 tags: 
 - Scala
-- Language
+- 编程语言
 ---
 
 ### 将隐式解析看作是方法调用
