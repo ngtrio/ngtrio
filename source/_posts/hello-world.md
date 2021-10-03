@@ -1,38 +1,40 @@
 ---
 title: Hello World
+tags: 
+- TEST
+- DEMO
 ---
-Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
 
-## Quick Start
+### Python
 
-### Create a new post
-
-``` bash
-$ hexo new "My New Post"
+``` python
+print('Hello world')
 ```
 
-More info: [Writing](https://hexo.io/docs/writing.html)
+### C
 
-### Run server
-
-``` bash
-$ hexo server
+``` c
+int main(void) {
+  printf("Hello World!");
+}
 ```
 
-More info: [Server](https://hexo.io/docs/server.html)
+### Java
 
-### Generate static files
-
-``` bash
-$ hexo generate
+``` java
+public static main(String[] args) {
+    System.out.println("Hello world");
+}
 ```
 
-More info: [Generating](https://hexo.io/docs/generating.html)
-
-### Deploy to remote sites
-
-``` bash
-$ hexo deploy
+### Go
+```go
+func main() {
+    fmt.Println("Hello world")
+}
 ```
 
-More info: [Deployment](https://hexo.io/docs/one-command-deployment.html)
+### JavaScript
+```javascript
+console.log("Hello World!");
+```
