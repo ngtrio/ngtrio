@@ -89,8 +89,10 @@
   <%- css('css/normalize.css') %>
   <%- css('css/skeleton.css') %>
   <%- css('css/custom.css') %>
-  <%- css('css/prism-dark.css') %>
+  <%- css('css/prism-theme.css') %>
+  <% if (config.prismjs.line_number) { %>
   <%- css('css/prism-line-numbers.css') %>
+  <% } %>
   <!-- User css -->
   <% if (theme.usercss) { %>
   <%- css(theme.usercss) %>
