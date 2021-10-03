@@ -2,11 +2,18 @@
   <%- page.title %>
 </h2>
 
-<p>
-  <%- list_tags(page.tags, {class: 'classtest' , show_count: false, style: false}) %>
-   — <%- full_date(page.date, 'll' ) %> %>
-</p>
-
 <%- page.content%>
+<br/>
+<blockquote>
+  <p>
+    <%- list_tags(page.tags, {class: 'classtest' , show_count: false, style: false}) %>
+      —  Last updated on <%- full_date(page.date, 'll' ) %> by <%- config.author %>.%>
+  </p>
+  This article is posted under CC BY-NC-SA license.
+  <a class="icon" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noreferrer" aria-label="by-nc-sa">
+    <img style="margin-bottom: 0;" class="svg-hov" src="<%- theme.cc %>" width="65"/>
+  </a> 
+</blockquote>
+
 <%- partial('partial/comments') %>
 
