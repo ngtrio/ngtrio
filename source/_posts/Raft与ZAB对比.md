@@ -13,7 +13,7 @@ tags:
 3. LEADING
 4. OBSERVING
 
-### **专业名词**
+### **专有名词**
 
 1. electionEpoch：选举的逻辑时钟
 2. peerEpoch：每次leader选举完成后会选出一个peerEpoch
