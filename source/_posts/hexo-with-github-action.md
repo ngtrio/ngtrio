@@ -51,7 +51,7 @@ deploy:
 
 * [hexo部署](https://hexo.io/docs/one-command-deployment)
 
-2. [hexo-deployer-git插件](https://github.com/hexojs/hexo-deployer-git)
+* [hexo-deployer-git插件](https://github.com/hexojs/hexo-deployer-git)
 
 
 
@@ -217,9 +217,6 @@ Change: 2021-10-04 15:36:08.763454559 +0800
            uses: actions/checkout@v2
    ```
 
-   更多信息：
+   checkout action 的更多信息：
 
    https://github.com/actions/checkout
-
-   
-
