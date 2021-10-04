@@ -141,8 +141,6 @@ hexo deploy
 
 
 
-
-
 ## 踩坑点
 
 #### Post 的“更新时间”不对
@@ -178,13 +176,50 @@ Change: 2021-10-04 15:36:08.763454559 +0800
 
    其实 Hexo 文档对这个问题也有相关描述，其中说的是 git 工作流下可以将 updated 属性 fallback 成 date，即文件创建时间。这种方式基本相当于因噎废食，直接将 updated 属性本身的语义给屏蔽了。
 
-> **updated_option**
->
-> `updated_option` 控制了当 Front Matter 中没有指定 `updated` 时，`updated` 如何取值：
->
-> - `mtime`: 使用文件的最后修改时间。这是从 Hexo 3.0.0 开始的默认行为。
-> - `date`: 使用 `date` 作为 `updated` 的值。可被用于 Git 工作流之中，因为使用 Git 管理站点时，文件的最后修改日期常常会发生改变
-> - `empty`: 直接删除 `updated`。使用这一选项可能会导致大部分主题和插件无法正常工作。
+   > **updated_option**
+   >
+   > `updated_option` 控制了当 Front Matter 中没有指定 `updated` 时，`updated` 如何取值：
+   >
+   > - `mtime`: 使用文件的最后修改时间。这是从 Hexo 3.0.0 开始的默认行为。
+   > - `date`: 使用 `date` 作为 `updated` 的值。可被用于 Git 工作流之中，因为使用 Git 管理站点时，文件的最后修改日期常常会发生改变
+   > - `empty`: 直接删除 `updated`。使用这一选项可能会导致大部分主题和插件无法正常工作。
 
+2. 根据 git log 获取 post 的 last commit time
 
+   在 workflow 中添加一步：将 post 文件上次 git commit 的时间，设置成该文件在 Github Action 构建机器下的mtime。
+
+   那么Hexo在渲染的时候就会将 post 的上次更新时间设置为该 post 上次 git commit 的时间了（我们将每一次 post 文件的 git commit 都视作发/更新 post）。
+
+   这部分工作实际已经包含于上文的 deploy 脚本中，这里单独拎出来：
+
+   ```bash
+   # fetch mtime from git log
+   git ls-files -z source/_posts |
+       while read -d '' path; do
+       if [[ $path == *.md ]]; then
+           mtime=$(git log -1 --format="@%ct" $path)
+           touch -d $mtime $path
+           echo "change $path mtime to $mtime"
+       fi
+       done
+   ```
+
+   **注意：**
+
+   checkout action 默认是 shallow clone，但我们需要拉取全量 git log 才能读到正确的 last commit time，所以进行如下配置：
+
+   ```yaml
+   - name: Checkout to main
+           with:
+             submodules: recursive
+             # 拉取全量 log
+             fetch-depth: 0
+           uses: actions/checkout@v2
+   ```
+
+   更多信息：
+
+   https://github.com/actions/checkout
+
+   
 
