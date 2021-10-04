@@ -1,14 +1,24 @@
 <h2>
   <%- page.title %>
 </h2>
+<h5><%- full_date(page.date) %>%></h5>
+
+
 
 <%- page.content%>
 <br/>
 <blockquote>
-  <p>
-    <%- list_tags(page.tags, {class: 'classtest' , show_count: false, style: false}) %>
-      —  <%- __('LastUpdatedOn') %> <%- full_date(page.updated, 'll' ) %>%>
-  </p>
+  <% if (page.tags.length != 0) {%>
+    <p>
+      <%- list_tags(page.tags, {class: 'classtest' , show_count: false, style: false}) %>
+    </p>
+  <% } %>
+
+  <% if (page.updated > page.date) {%>
+    <p>
+      <%- __('UpdatedOn') %>: <%- full_date(page.updated) %>%>
+    </p>
+  <% } %>
   <%- __('License') %>: CC BY-NC-SA
   <a class="icon" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noreferrer" aria-label="by-nc-sa">
     <img style="margin-bottom: 0;" class="svg-hov" src="<%- theme.cc %>" width="65"/>
