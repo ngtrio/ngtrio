@@ -34,13 +34,8 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           git config --global user.email "ngtercet@protonmail.com"
           git config --global user.name "Jaron"
-          
-      - name: Setup Hexo
-        run: |
-          npm install hexo-cli -g
-          npm install
         
       - name: Deploy
         run: |
-          hexo clean
-          hexo deploy
+          chmod +x deploy.sh
+          ./deploy.sh
