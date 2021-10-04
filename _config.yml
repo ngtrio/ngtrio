@@ -13,7 +13,7 @@ timezone: 'Asia/Shanghai'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://ngtercet.github.io
+url: http://ngtrio.me
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -106,6 +106,6 @@ theme: minima
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: git@github.com:ngtercet/ngtercet.github.io.git
+  repo: git@github.com:ngtrio/ngtrio.github.io.git
   branch: main
   message: Auto deploy via Github Action
