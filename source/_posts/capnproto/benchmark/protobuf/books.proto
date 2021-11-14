@@ -1,0 +1,13 @@
+syntax = "proto3";
+package books;
+
+
+
+option go_package = "benchmark/protobuf";
+
+
+
+message Books {
+    string title = 1;
+    int32 pageCount = 2;  
+}
