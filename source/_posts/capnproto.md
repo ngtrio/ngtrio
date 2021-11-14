@@ -1,13 +1,9 @@
 ---
-title: capnproto
+title: Cap'n Proto
 date: 2021-11-14 16:52:38
 tags:
 - RPC
 ---
-
-
-# Cap'n Proto
-
 从Kitex的Rodemap中看到这一条：
 
 ![image-20211115000303622](image-20211115000303622.png)
