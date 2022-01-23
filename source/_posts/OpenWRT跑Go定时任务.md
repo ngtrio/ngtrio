@@ -32,7 +32,7 @@ GOOS=linux GOARCH=mipsle GOMIPS=softfloat go build
 ```
 root@OpenWrt:/etc# date -R
 Sun, 23 Jan 2022 10:56:06 +0800
-```   
+```
 
 而我也清楚记得Go的time.Format()默认就是采用的系统时区，这里Go没有读取到就有点奇怪了。   
 于是了解了下细节：   
