@@ -2,7 +2,7 @@
 title: Golang-Array和Slice
 date: 2021-10-05 16:14:16
 tags:
-- Golang
+- Go
 - 编程语言
 ---
 ## Spec
