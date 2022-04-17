@@ -220,7 +220,48 @@ var t1 Type[Child1] // wrong, Child1没有实现方法Func
 var t2 Type[Child2] // wrong, Child2实现了方法Func，但不是 Child | Child1 中的一员
 ```
 
+### 类型并集
+一个接口中，每行的类型取并集
+```go
+type IntA interface {
+    int | int8 | int16
+}
+
+type IntB interface {
+    int8 | int16 | int32 | int64
+}
+
+type IntC interface { // 等价于 int | int8 | int16 | int32 | int64
+    IntA | IntB
+}
+```
+### 类型交集
+一个接口中行之间的类型定义将取交集
+```go
+type IntA interface {
+    int | int8 | int16
+}
+
+type IntB interface {
+    int8 | int16 | int32 | int64
+}
+
+type IntC interface { // 等价于 int8 | int16
+    IntA
+    IntB
+}
+```
+
+### 底层类型约束
+Go新增了一个符号`~`, 置于基础类型前的时候，这个类型集合将不止包含这个基础类型，还会包含所有底层类型为该基础类型的类型。  
+比如：
+```go
+type Int interface {
+    ~int | ~int8 | ~int16 | ~int32 | ~int64
+}
+
+type IntType int // IntType也满足Int接口定义的类型约束
+```
+
 ## 后续
-* 接口交集、并集
-* 底层类型约束(~)
 * 泛型接口
