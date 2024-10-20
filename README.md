@@ -1,11 +1,15 @@
 <!--START_SECTION:waka-->
-![Code Time](http://img.shields.io/badge/Code%20Time-1%2C023%20hrs%2031%20mins-blue)
+![Code Time](http://img.shields.io/badge/Code%20Time-1%2C026%20hrs%2020%20mins-blue)
 
 📊 **This Week I Spent My Time On** 
 
 ```text
 💬 Programming Languages: 
-No Activity Tracked This Week
+Rust                     2 hrs 7 mins        ███████████████████░░░░░░   75.65 % 
+TOML                     21 mins             ███░░░░░░░░░░░░░░░░░░░░░░   12.93 % 
+Go                       7 mins              █░░░░░░░░░░░░░░░░░░░░░░░░   04.43 % 
+Python                   6 mins              █░░░░░░░░░░░░░░░░░░░░░░░░   04.01 % 
+Bash                     4 mins              █░░░░░░░░░░░░░░░░░░░░░░░░   02.84 % 
 ```
 
 
