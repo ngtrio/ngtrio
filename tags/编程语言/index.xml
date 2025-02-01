@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>编程语言 on 星河鹭起</title><link>http://ngtrio.com/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/</link><description>Recent content in 编程语言 on 星河鹭起</description><generator>Hugo</generator><language>en-us</language><copyright>ngtrio. 本站遵循 CC-BY-NC 4.0 协议</copyright><lastBuildDate>Sun, 17 Apr 2022 23:09:41 +0800</lastBuildDate><atom:link href="http://ngtrio.com/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml"/><item><title>Go Generics</title><link>http://ngtrio.com/posts/go-genric/</link><pubDate>Sun, 17 Apr 2022 23:09:41 +0800</pubDate><guid>http://ngtrio.com/posts/go-genric/</guid><description>&lt;p>&lt;img src="images/2022-04-17-15-22-16.png" alt="">&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>编程语言 on 星河鹭起</title><link>https://ngtrio.com/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/</link><description>Recent content in 编程语言 on 星河鹭起</description><generator>Hugo</generator><language>en-us</language><copyright>ngtrio. 本站遵循 CC-BY-NC 4.0 协议</copyright><lastBuildDate>Sun, 17 Apr 2022 23:09:41 +0800</lastBuildDate><atom:link href="https://ngtrio.com/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml"/><item><title>Go Generics</title><link>https://ngtrio.com/posts/go-genric/</link><pubDate>Sun, 17 Apr 2022 23:09:41 +0800</pubDate><guid>https://ngtrio.com/posts/go-genric/</guid><description>&lt;p>&lt;img src="images/2022-04-17-15-22-16.png" alt="">&lt;/p>
 &lt;ul>
 &lt;li>Generics&lt;/li>
 &lt;li>Fuzzing&lt;/li>
@@ -44,7 +44,7 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	}
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#8b008b;font-weight:bold">return&lt;/span> *anyPtr
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>对于不同的类型，我们都只需要调用这一个&lt;code>泛型函数&lt;/code>即可。&lt;/p></description></item><item><title>Go Array&amp;Slice</title><link>http://ngtrio.com/posts/go-array-slice/</link><pubDate>Tue, 05 Oct 2021 16:14:16 +0800</pubDate><guid>http://ngtrio.com/posts/go-array-slice/</guid><description>&lt;h2 id="spec">Spec&lt;/h2>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>对于不同的类型，我们都只需要调用这一个&lt;code>泛型函数&lt;/code>即可。&lt;/p></description></item><item><title>Go Array&amp;Slice</title><link>https://ngtrio.com/posts/go-array-slice/</link><pubDate>Tue, 05 Oct 2021 16:14:16 +0800</pubDate><guid>https://ngtrio.com/posts/go-array-slice/</guid><description>&lt;h2 id="spec">Spec&lt;/h2>
 &lt;blockquote>
 &lt;p>Array:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">&lt;code class="language-txt" data-lang="txt">&lt;span style="display:flex;">&lt;span>ArrayType = &amp;#34;[&amp;#34; ArrayLength &amp;#34;]&amp;#34; ElementType .
@@ -102,7 +102,7 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#658b00">copy&lt;/span>(slice[l:], data)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#8b008b;font-weight:bold">return&lt;/span> slice
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>我们必须将扩容后的Slice返回，因为Slice本身实际上还是值传递（底层字段ptr，len， cap）&lt;/p></description></item><item><title>Scala隐式转换的理解</title><link>http://ngtrio.com/posts/scala%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%90%86%E8%A7%A3/</link><pubDate>Fri, 09 Jul 2021 09:29:32 +0800</pubDate><guid>http://ngtrio.com/posts/scala%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%90%86%E8%A7%A3/</guid><description>&lt;h3 id="将隐式解析看作是方法调用">将隐式解析看作是方法调用&lt;/h3>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>我们必须将扩容后的Slice返回，因为Slice本身实际上还是值传递（底层字段ptr，len， cap）&lt;/p></description></item><item><title>Scala隐式转换的理解</title><link>https://ngtrio.com/posts/scala%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%90%86%E8%A7%A3/</link><pubDate>Fri, 09 Jul 2021 09:29:32 +0800</pubDate><guid>https://ngtrio.com/posts/scala%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%90%86%E8%A7%A3/</guid><description>&lt;h3 id="将隐式解析看作是方法调用">将隐式解析看作是方法调用&lt;/h3>
 &lt;ul>
 &lt;li>
 &lt;p>隐式参数&lt;/p>

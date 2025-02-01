@@ -1,4 +1,4 @@
-<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>星河鹭起</title><link>http://ngtrio.com/</link><description>Recent content on 星河鹭起</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>ngtrio. 本站遵循 CC-BY-NC 4.0 协议</copyright><lastBuildDate>Sun, 17 Apr 2022 23:09:41 +0800</lastBuildDate><atom:link href="http://ngtrio.com/index.xml" rel="self" type="application/rss+xml"/><item><title>Go Generics</title><link>http://ngtrio.com/posts/go-genric/</link><pubDate>Sun, 17 Apr 2022 23:09:41 +0800</pubDate><guid>http://ngtrio.com/posts/go-genric/</guid><description>星河鹭起 http://ngtrio.com/posts/go-genric/ -&lt;p>&lt;img src="images/2022-04-17-15-22-16.png" alt="">&lt;/p>
+<?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>星河鹭起</title><link>https://ngtrio.com/</link><description>Recent content on 星河鹭起</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>ngtrio. 本站遵循 CC-BY-NC 4.0 协议</copyright><lastBuildDate>Sun, 17 Apr 2022 23:09:41 +0800</lastBuildDate><atom:link href="https://ngtrio.com/index.xml" rel="self" type="application/rss+xml"/><item><title>Go Generics</title><link>https://ngtrio.com/posts/go-genric/</link><pubDate>Sun, 17 Apr 2022 23:09:41 +0800</pubDate><guid>https://ngtrio.com/posts/go-genric/</guid><description>星河鹭起 https://ngtrio.com/posts/go-genric/ -&lt;p>&lt;img src="images/2022-04-17-15-22-16.png" alt="">&lt;/p>
 &lt;ul>
 &lt;li>Generics&lt;/li>
 &lt;li>Fuzzing&lt;/li>
@@ -215,7 +215,7 @@ Go语言本身的类型系统比较简单，不像Scala、Kotlin等语言，有�
 &lt;ul>
 &lt;li>泛型接口&lt;/li>
 &lt;/ul>
-- http://ngtrio.com/posts/go-genric/ - ngtrio. 本站遵循 CC-BY-NC 4.0 协议</description></item><item><title>OpenWRT跑Go定时任务</title><link>http://ngtrio.com/posts/openwrt%E8%B7%91go%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/</link><pubDate>Sun, 23 Jan 2022 10:48:19 +0800</pubDate><guid>http://ngtrio.com/posts/openwrt%E8%B7%91go%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/</guid><description>星河鹭起 http://ngtrio.com/posts/openwrt%E8%B7%91go%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/ -&lt;h2 id="背景">背景&lt;/h2>
+- https://ngtrio.com/posts/go-genric/ - ngtrio. 本站遵循 CC-BY-NC 4.0 协议</description></item><item><title>OpenWRT跑Go定时任务</title><link>https://ngtrio.com/posts/openwrt%E8%B7%91go%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/</link><pubDate>Sun, 23 Jan 2022 10:48:19 +0800</pubDate><guid>https://ngtrio.com/posts/openwrt%E8%B7%91go%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/</guid><description>星河鹭起 https://ngtrio.com/posts/openwrt%E8%B7%91go%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/ -&lt;h2 id="背景">背景&lt;/h2>
 &lt;p>因为前段时间为了做一个全局的🪜，于是把家里的路由器刷了一个OpenWRT，尽管路由器性能比较拉胯，但是架起了🪜后，还是有一定的闪存空间以及内存空间，最近想把这点空间也给利用上，&lt;del>路由器24h工作的电费得找补回来。&lt;/del> &lt;br>
 想到之前学习Go的时候写了个简单的TG机器人，刚好最近想跑几个定时任务，于是决定把这个机器人搭建到路由器上。&lt;/p>
 &lt;h2 id="交叉编译">交叉编译&lt;/h2>
@@ -255,7 +255,7 @@ Sun, 23 Jan 2022 10:56:06 +0800
 &lt;p>&lt;a href="https://stackoverflow.com/a/60161561/11571735">Writing and Compiling Program For OpenWrt&lt;/a>&lt;br>
 &lt;a href="https://go.dev/doc/install/source#environment">Go environment&lt;/a>&lt;br>
 &lt;a href="https://www.imhanjm.com/2017/10/29/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3golang%E6%97%B6%E9%97%B4%E5%A4%84%E7%90%86(time.time)/">深入理解GO时间处理(time.Time)&lt;/a>&lt;/p>
-- http://ngtrio.com/posts/openwrt%E8%B7%91go%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/ - ngtrio. 本站遵循 CC-BY-NC 4.0 协议</description></item><item><title>Capnproto</title><link>http://ngtrio.com/posts/capnproto/</link><pubDate>Sun, 14 Nov 2021 16:52:38 +0800</pubDate><guid>http://ngtrio.com/posts/capnproto/</guid><description>星河鹭起 http://ngtrio.com/posts/capnproto/ -&lt;p>从Kitex的Rodemap中看到这一条：&lt;/p>
+- https://ngtrio.com/posts/openwrt%E8%B7%91go%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/ - ngtrio. 本站遵循 CC-BY-NC 4.0 协议</description></item><item><title>Capnproto</title><link>https://ngtrio.com/posts/capnproto/</link><pubDate>Sun, 14 Nov 2021 16:52:38 +0800</pubDate><guid>https://ngtrio.com/posts/capnproto/</guid><description>星河鹭起 https://ngtrio.com/posts/capnproto/ -&lt;p>从Kitex的Rodemap中看到这一条：&lt;/p>
 &lt;p>&lt;img src="images/image-20211115000303622.png" alt="image-20211115000303622">&lt;/p>
 &lt;h3 id="简介">简介&lt;/h3>
 &lt;p>&lt;a href="https://capnproto.org/index.html">Cap&amp;rsquo;n Proto &lt;/a>是Protocol Buffer 2 的主要作者 Kenton Varda 经过多年的实践经验和听取用户使用建议后所设计出来的数据交换格式(interchange format) 和 RPC 系统。&lt;/p>
@@ -271,7 +271,7 @@ Sun, 23 Jan 2022 10:56:06 +0800
 &lt;/ul>
 &lt;h3 id="rpc-protocol">RPC Protocol&lt;/h3>
 &lt;p>&lt;a href="https://capnproto.org/rpc.html">Time travel&lt;/a>&lt;/p>
-- http://ngtrio.com/posts/capnproto/ - ngtrio. 本站遵循 CC-BY-NC 4.0 协议</description></item><item><title>Go Array&amp;Slice</title><link>http://ngtrio.com/posts/go-array-slice/</link><pubDate>Tue, 05 Oct 2021 16:14:16 +0800</pubDate><guid>http://ngtrio.com/posts/go-array-slice/</guid><description>星河鹭起 http://ngtrio.com/posts/go-array-slice/ -&lt;h2 id="spec">Spec&lt;/h2>
+- https://ngtrio.com/posts/capnproto/ - ngtrio. 本站遵循 CC-BY-NC 4.0 协议</description></item><item><title>Go Array&amp;Slice</title><link>https://ngtrio.com/posts/go-array-slice/</link><pubDate>Tue, 05 Oct 2021 16:14:16 +0800</pubDate><guid>https://ngtrio.com/posts/go-array-slice/</guid><description>星河鹭起 https://ngtrio.com/posts/go-array-slice/ -&lt;h2 id="spec">Spec&lt;/h2>
 &lt;blockquote>
 &lt;p>Array:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">&lt;code class="language-txt" data-lang="txt">&lt;span style="display:flex;">&lt;span>ArrayType = &amp;#34;[&amp;#34; ArrayLength &amp;#34;]&amp;#34; ElementType .
@@ -362,7 +362,7 @@ Sun, 23 Jan 2022 10:56:06 +0800
 &lt;p>本文图片引自：&lt;/p>
 &lt;p>&lt;a href="https://go.dev/blog/slices-intro">https://go.dev/blog/slices-intro&lt;/a>&lt;/p>
 &lt;/blockquote>
-- http://ngtrio.com/posts/go-array-slice/ - ngtrio. 本站遵循 CC-BY-NC 4.0 协议</description></item><item><title>通过Github Action部署hexo博客到pages</title><link>http://ngtrio.com/posts/hexo-with-github-action/</link><pubDate>Mon, 04 Oct 2021 14:41:24 +0800</pubDate><guid>http://ngtrio.com/posts/hexo-with-github-action/</guid><description>星河鹭起 http://ngtrio.com/posts/hexo-with-github-action/ -&lt;p>Hexo部署到 Github Page 的一般分为下面三步&lt;/p>
+- https://ngtrio.com/posts/go-array-slice/ - ngtrio. 本站遵循 CC-BY-NC 4.0 协议</description></item><item><title>通过Github Action部署hexo博客到pages</title><link>https://ngtrio.com/posts/hexo-with-github-action/</link><pubDate>Mon, 04 Oct 2021 14:41:24 +0800</pubDate><guid>https://ngtrio.com/posts/hexo-with-github-action/</guid><description>星河鹭起 https://ngtrio.com/posts/hexo-with-github-action/ -&lt;p>Hexo部署到 Github Page 的一般分为下面三步&lt;/p>
 &lt;ol>
 &lt;li>写 Markdown&lt;/li>
 &lt;li>将 Markdown 渲染成 HTML 静态页面&lt;/li>
@@ -536,7 +536,7 @@ Sun, 23 Jan 2022 10:56:06 +0800
 &lt;p>&lt;a href="https://github.com/actions/checkout">https://github.com/actions/checkout&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-- http://ngtrio.com/posts/hexo-with-github-action/ - ngtrio. 本站遵循 CC-BY-NC 4.0 协议</description></item><item><title>读DDIA-数据复制</title><link>http://ngtrio.com/posts/ddia/</link><pubDate>Sat, 02 Oct 2021 11:29:06 +0800</pubDate><guid>http://ngtrio.com/posts/ddia/</guid><description>星河鹭起 http://ngtrio.com/posts/ddia/ -&lt;h2 id="数据复制">数据复制&lt;/h2>
+- https://ngtrio.com/posts/hexo-with-github-action/ - ngtrio. 本站遵循 CC-BY-NC 4.0 协议</description></item><item><title>读DDIA-数据复制</title><link>https://ngtrio.com/posts/ddia/</link><pubDate>Sat, 02 Oct 2021 11:29:06 +0800</pubDate><guid>https://ngtrio.com/posts/ddia/</guid><description>星河鹭起 https://ngtrio.com/posts/ddia/ -&lt;h2 id="数据复制">数据复制&lt;/h2>
 &lt;p>分布式系统中， 通过数据复制，我们希望达到下列目的：&lt;/p>
 &lt;ul>
 &lt;li>在全球各地数据中心间进行数据复制，使得数据在地理上更加接近用户，降低用户请求延迟&lt;/li>
@@ -794,7 +794,7 @@ Sun, 23 Jan 2022 10:56:06 +0800
 &lt;p>上述过程是只有一个副本的情况，在此副本服务端引入一个版本号技术就能够确定多个写请求是属于因果关系还是并发关系。&lt;/p>
 &lt;p>如果扩展到无主节点集群，由于每个副本都能够接受写请求，那么单个的版本号就无法满足要求了，这就要求每个副本和每个主键都要维护一个版本号，并且同时还要跟踪其他副本的版本号，通过这些信息才能判断写请求的依赖关系。&lt;/p>
 &lt;p>所有副本的版本号集合就被成为是&lt;strong>版本矢量。&lt;/strong>&lt;/p>
-- http://ngtrio.com/posts/ddia/ - ngtrio. 本站遵循 CC-BY-NC 4.0 协议</description></item><item><title>Raft与ZAB对比</title><link>http://ngtrio.com/posts/raft%E4%B8%8Ezab%E5%AF%B9%E6%AF%94/</link><pubDate>Fri, 13 Aug 2021 08:29:23 +0800</pubDate><guid>http://ngtrio.com/posts/raft%E4%B8%8Ezab%E5%AF%B9%E6%AF%94/</guid><description>星河鹭起 http://ngtrio.com/posts/raft%E4%B8%8Ezab%E5%AF%B9%E6%AF%94/ -&lt;h2 id="zab">&lt;strong>ZAB&lt;/strong>&lt;/h2>
+- https://ngtrio.com/posts/ddia/ - ngtrio. 本站遵循 CC-BY-NC 4.0 协议</description></item><item><title>Raft与ZAB对比</title><link>https://ngtrio.com/posts/raft%E4%B8%8Ezab%E5%AF%B9%E6%AF%94/</link><pubDate>Fri, 13 Aug 2021 08:29:23 +0800</pubDate><guid>https://ngtrio.com/posts/raft%E4%B8%8Ezab%E5%AF%B9%E6%AF%94/</guid><description>星河鹭起 https://ngtrio.com/posts/raft%E4%B8%8Ezab%E5%AF%B9%E6%AF%94/ -&lt;h2 id="zab">&lt;strong>ZAB&lt;/strong>&lt;/h2>
 &lt;h3 id="zab节点状态">&lt;strong>ZAB节点状态：&lt;/strong>&lt;/h3>
 &lt;ol>
 &lt;li>LOOKING&lt;/li>
@@ -924,7 +924,7 @@ Sun, 23 Jan 2022 10:56:06 +0800
 &lt;/ul>
 &lt;/li>
 &lt;/ol>
-- http://ngtrio.com/posts/raft%E4%B8%8Ezab%E5%AF%B9%E6%AF%94/ - ngtrio. 本站遵循 CC-BY-NC 4.0 协议</description></item><item><title>Scala隐式转换的理解</title><link>http://ngtrio.com/posts/scala%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%90%86%E8%A7%A3/</link><pubDate>Fri, 09 Jul 2021 09:29:32 +0800</pubDate><guid>http://ngtrio.com/posts/scala%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%90%86%E8%A7%A3/</guid><description>星河鹭起 http://ngtrio.com/posts/scala%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%90%86%E8%A7%A3/ -&lt;h3 id="将隐式解析看作是方法调用">将隐式解析看作是方法调用&lt;/h3>
+- https://ngtrio.com/posts/raft%E4%B8%8Ezab%E5%AF%B9%E6%AF%94/ - ngtrio. 本站遵循 CC-BY-NC 4.0 协议</description></item><item><title>Scala隐式转换的理解</title><link>https://ngtrio.com/posts/scala%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%90%86%E8%A7%A3/</link><pubDate>Fri, 09 Jul 2021 09:29:32 +0800</pubDate><guid>https://ngtrio.com/posts/scala%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%90%86%E8%A7%A3/</guid><description>星河鹭起 https://ngtrio.com/posts/scala%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%90%86%E8%A7%A3/ -&lt;h3 id="将隐式解析看作是方法调用">将隐式解析看作是方法调用&lt;/h3>
 &lt;ul>
 &lt;li>
 &lt;p>隐式参数&lt;/p>
@@ -965,4 +965,4 @@ Sun, 23 Jan 2022 10:56:06 +0800
 &lt;li>&lt;a href="https://www.geekabyte.io/2017/12/implicit-scope-and-implicit-resolution.html">https://www.geekabyte.io/2017/12/implicit-scope-and-implicit-resolution.html&lt;/a>&lt;/li>
 &lt;/ul>
 &lt;/blockquote>
-- http://ngtrio.com/posts/scala%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%90%86%E8%A7%A3/ - ngtrio. 本站遵循 CC-BY-NC 4.0 协议</description></item></channel></rss>
+- https://ngtrio.com/posts/scala%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%90%86%E8%A7%A3/ - ngtrio. 本站遵循 CC-BY-NC 4.0 协议</description></item></channel></rss>
