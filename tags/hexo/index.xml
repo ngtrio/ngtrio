@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hexo on 星河鹭起</title><link>http://ngtrio.com/tags/hexo/</link><description>Recent content in Hexo on 星河鹭起</description><generator>Hugo</generator><language>en-us</language><copyright>ngtrio. 本站遵循 CC-BY-NC 4.0 协议</copyright><lastBuildDate>Mon, 04 Oct 2021 14:41:24 +0800</lastBuildDate><atom:link href="http://ngtrio.com/tags/hexo/index.xml" rel="self" type="application/rss+xml"/><item><title>通过Github Action部署hexo博客到pages</title><link>http://ngtrio.com/posts/hexo-with-github-action/</link><pubDate>Mon, 04 Oct 2021 14:41:24 +0800</pubDate><guid>http://ngtrio.com/posts/hexo-with-github-action/</guid><description>&lt;p>Hexo部署到 Github Page 的一般分为下面三步&lt;/p>
+&lt;ol>
+&lt;li>写 Markdown&lt;/li>
+&lt;li>将 Markdown 渲染成 HTML 静态页面&lt;/li>
+&lt;li>将渲染得到的文件提交到 &lt;code>&amp;lt;username&amp;gt;.github.io&lt;/code> 仓库&lt;/li>
+&lt;/ol>
+&lt;p>如果以写博客为目的话，上述2，3两步其实是“写博客“之外的操作，比较影响写博客的沉浸式体验。这里可以引入现成的 Github Action ，将上述的 workflow 进行自动化。&lt;/p>
+&lt;h2 id="准备">准备&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>Github Pages 仓库 &lt;code>&amp;lt;username&amp;gt;.github.io&lt;/code>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Blog 的源代码仓库&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>ssh-keygen 生成一对非对称密钥，公钥作为 page 仓库的 &lt;code>Deploy Key&lt;/code>，私钥填入源代码仓库的 Secrets，供后续 Github Action 提交代码到 page 仓库&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>安装 hexo git 部署插件 hexo-deployer-git&lt;/p>
+&lt;pre tabindex="0">&lt;code>npm install hexo-deployer-git --save
+&lt;/code>&lt;/pre>&lt;/li>
+&lt;/ol>
+&lt;h2 id="配置hexo-deploy">配置Hexo Deploy&lt;/h2>
+&lt;p>在hexo源码工程下的 &lt;code>_config.yml&lt;/code> 中配置下列信息&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8b008b;font-weight:bold">deploy&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#8b008b;font-weight:bold">type&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>git&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#8b008b;font-weight:bold">repo&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>git@github.com:username/&amp;lt;username&amp;gt;.github.io.git&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#8b008b;font-weight:bold">branch&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>分支名&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#d6d6c6">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#8b008b;font-weight:bold">message&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>提交信息&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在执行 &lt;code>hexo deploy&lt;/code> 命令时，hexo-deployer-git 插件大致会执行如下流程：&lt;/p></description></item></channel></rss>

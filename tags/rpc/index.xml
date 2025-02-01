@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>RPC on 星河鹭起</title><link>http://ngtrio.com/tags/rpc/</link><description>Recent content in RPC on 星河鹭起</description><generator>Hugo</generator><language>en-us</language><copyright>ngtrio. 本站遵循 CC-BY-NC 4.0 协议</copyright><lastBuildDate>Sun, 14 Nov 2021 16:52:38 +0800</lastBuildDate><atom:link href="http://ngtrio.com/tags/rpc/index.xml" rel="self" type="application/rss+xml"/><item><title>Capnproto</title><link>http://ngtrio.com/posts/capnproto/</link><pubDate>Sun, 14 Nov 2021 16:52:38 +0800</pubDate><guid>http://ngtrio.com/posts/capnproto/</guid><description>&lt;p>从Kitex的Rodemap中看到这一条：&lt;/p>
+&lt;p>&lt;img src="images/image-20211115000303622.png" alt="image-20211115000303622">&lt;/p>
+&lt;h3 id="简介">简介&lt;/h3>
+&lt;p>&lt;a href="https://capnproto.org/index.html">Cap&amp;rsquo;n Proto &lt;/a>是Protocol Buffer 2 的主要作者 Kenton Varda 经过多年的实践经验和听取用户使用建议后所设计出来的数据交换格式(interchange format) 和 RPC 系统。&lt;/p>
+&lt;h3 id="特性">特性&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>增量读：&lt;/strong> Cap’n Proto 的 message 不用等全部接收完成了才开始处理。因为消息中的 inner 对象是被安排在 outer 对象的后面的，而不像其他大多协议一样是嵌套关系。&lt;/li>
+&lt;li>&lt;strong>随机访问：&lt;/strong> 能够只读一条消息中的一个 field，而不用解析整个消息。&lt;/li>
+&lt;li>&lt;strong>mmap：&lt;/strong> 支持mmp。像 protobuf 就不支持，读很小一部分信息也会加载所有数据到用户态。（其实也没啥可比性，这个特性主要还是因为没有encoding/decoding过程）&lt;/li>
+&lt;li>&lt;strong>高效的进程间通信：&lt;/strong> 同机器上的多个进程可以通过共享内存来分享Cap&amp;rsquo;n Message。没有必要将数据在user/kernel之间来回拷贝。&lt;/li>
+&lt;li>&lt;strong>内存集中分配：&lt;/strong> Cap’n Proto 的对象通常会集中分配，有点类似池化，达到可复用的效果，缓存友好。&lt;/li>
+&lt;li>&lt;strong>生成的代码量小：&lt;/strong> Protobuf 会为每种消息类型生成解析和编码的代码,代码量巨大. Cap’n Proto 生成的代码少至少一个数量级。&lt;/li>
+&lt;li>&lt;strong>Time-traveling RPC：&lt;/strong> 下面介绍。&lt;/li>
+&lt;/ul>
+&lt;h3 id="rpc-protocol">RPC Protocol&lt;/h3>
+&lt;p>&lt;a href="https://capnproto.org/rpc.html">Time travel&lt;/a>&lt;/p></description></item></channel></rss>

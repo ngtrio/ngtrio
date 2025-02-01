@@ -1,0 +1,190 @@
+<!doctype html><html lang=zh><head><title>Go Generics</title>
+<meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=5" name=viewport><meta content="telephone=no" name=format-detection><meta name=description content="go语言泛型"><meta name=renderer content="webkit"><meta name=theme-color content="#ffffff"><meta property="og:url" content="http://ngtrio.com/posts/go-genric/"><meta property="og:site_name" content="星河鹭起"><meta property="og:title" content="Go Generics"><meta property="og:description" content="go语言泛型"><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2022-04-17T23:09:41+08:00"><meta property="article:modified_time" content="2022-04-17T23:09:41+08:00"><meta property="article:tag" content="Go"><meta property="article:tag" content="编程语言"><meta name=twitter:card content="summary"><meta name=twitter:title content="Go Generics"><meta name=twitter:description content="go语言泛型"><script src=/js/toc.js></script><link type=text/css rel=stylesheet href=/vendor/css/bootstrap.min.css><link rel=stylesheet href=/scss/dark-mode.min.cb53f1bee2b8900cb4f082afbf00175d6618f281cf9a2fe8619e3b52d20b5721.css integrity="sha256-y1PxvuK4kAy08IKvvwAXXWYY8oHPmi/oYZ47UtILVyE=" media=screen><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Material+Icons"></head><body><div id=app><div class=single-column-drawer-container id=drawer v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }"><div class=drawer-content><div class=drawer-menu><a class="a-block drawer-menu-item active" href=/posts>归档 Archive
+</a><a class="a-block drawer-menu-item false" href=/categories>分类 Categories
+</a><a class="a-block drawer-menu-item false" href=/tags>标签 Tags</a><div class=toc><div class=toc-content><center>- 目录 -</center><ul><ul><li><a href=#%e4%bb%8e%e5%b8%b8%e8%a7%81%e7%9a%84%e5%9c%ba%e6%99%af%e8%af%b4%e8%b5%b7 class=nav-从常见的场景说起>从常见的场景说起</a></li><ul><li><a href=#%e5%af%b9%e6%8c%87%e9%92%88%e7%b1%bb%e5%9e%8b%e8%bf%9b%e8%a1%8c%e8%a7%a3%e5%bc%95%e7%94%a8 class=nav-对指针类型进行解引用>对指针类型进行解引用</a></li><li><a href=#%e8%87%aa%e5%ae%9a%e4%b9%89%e5%ae%b9%e5%99%a8 class=nav-自定义容器>自定义容器</a></li></ul><li><a href=#%e5%9f%ba%e6%9c%ac%e6%a6%82%e5%bf%b5 class=nav-基本概念>基本概念</a></li><li><a href=#%e7%b1%bb%e5%9e%8b%e7%ba%a6%e6%9d%9ftype-constraint class=nav-类型约束type-constraint>类型约束(type constraint)</a></li><ul><li><a href=#%e5%9f%ba%e7%a1%80%e6%8e%a5%e5%8f%a3basic-interfaces class=nav-基础接口basic-interfaces>基础接口（Basic interfaces）</a></li><li><a href=#%e4%b8%80%e8%88%ac%e6%8e%a5%e5%8f%a3general-interfaces class=nav-一般接口general-interfaces>一般接口（General interfaces）</a></li><li><a href=#%e7%b1%bb%e5%9e%8b%e5%b9%b6%e9%9b%86 class=nav-类型并集>类型并集</a></li><li><a href=#%e7%b1%bb%e5%9e%8b%e4%ba%a4%e9%9b%86 class=nav-类型交集>类型交集</a></li><li><a href=#%e5%ba%95%e5%b1%82%e7%b1%bb%e5%9e%8b%e7%ba%a6%e6%9d%9f class=nav-底层类型约束>底层类型约束</a></li></ul><li><a href=#%e5%90%8e%e7%bb%ad class=nav-后续>后续</a></li></ul></div></div></div></div></div><transition name=fade><div id=drawer-mask v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if=isDrawerOpen v-on:click=toggleDrawer></div></transition><nav id=navBar class="navbar sticky-top navbar-light single-column-nav-container"><div id=navBackground class=nav-background></div><div class="container container-narrow nav-content"><button id=nav_dropdown_btn class=nav-dropdown-toggle type=button v-on:click=toggleDrawer>
+<i class=material-icons>menu
+</i></button>
+<a id=navTitle class=navbar-brand href=http://ngtrio.com/>星河鹭起
+</a><button type=button class=nav-darkmode-toggle id=darkModeToggleButton2>
+<i class=material-icons id=darkModeToggleIcon2>dark_mode</i></button></div></nav><div class=single-column-header-container id=pageHead v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }"><a href=http://ngtrio.com/><div class=single-column-header-title>星河鹭起</div></a></div><div id=content><div id=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper style=background-image:url(/posts/go-genric/images/2022-04-17-15-22-16.png)><div class=post-title>Go Generics<div class=post-subtitle>go语言泛型</div><div class=post-meta><time itemprop=datePublished>2022-04-17 23:09
+</time><i class=material-icons>label</i>
+<a href=/tags/go>Go</a>
+&nbsp;
+<a href=/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80>编程语言</a>
+&nbsp;
+<i class=material-icons>schedule</i>
+9 min
+38 s.</div></div></div><div class=post-body-wrapper><div class=post-body v-pre><p><img src=images/2022-04-17-15-22-16.png alt></p><ul><li>Generics</li><li>Fuzzing</li><li>Workspaces</li><li>20% Performance Improvements</li></ul><p>本文是对Go1.18的第一个特性：泛型（Generics）做的一些体验总结。</p><h2 id=从常见的场景说起>从常见的场景说起</h2><h3 id=对指针类型进行解引用>对指针类型进行解引用</h3><p>一般我们会像下面这样对不同的类型分别实现对应的解引用函数（不使用反射的情况下）</p><div class=highlight><pre tabindex=0 style=background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#8b008b;font-weight:700>func</span> <span style=color:#008b45>PtrToString</span>(strPtr *<span style=color:#00688b;font-weight:700>string</span>) <span style=color:#00688b;font-weight:700>string</span> {
+</span></span><span style=display:flex><span>    <span style=color:#8b008b;font-weight:700>if</span> strPtr == <span style=color:#8b008b;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>        <span style=color:#8b008b;font-weight:700>return</span> <span style=color:#cd5555>&#34;&#34;</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex;background-color:#d6d6c6><span>
+</span></span><span style=display:flex><span>    <span style=color:#8b008b;font-weight:700>return</span> *strPtr
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>func</span> <span style=color:#008b45>PtrToInt</span>(intPtr *<span style=color:#00688b;font-weight:700>int</span>) <span style=color:#00688b;font-weight:700>int</span> {
+</span></span><span style=display:flex><span>    <span style=color:#8b008b;font-weight:700>if</span> intPtr == <span style=color:#8b008b;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>        <span style=color:#8b008b;font-weight:700>return</span> <span style=color:#b452cd>0</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#8b008b;font-weight:700>return</span> *intPtr
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>func</span> <span style=color:#008b45>PtrToBool</span>(boolPtr *<span style=color:#00688b;font-weight:700>bool</span>) <span style=color:#00688b;font-weight:700>bool</span> {
+</span></span><span style=display:flex><span>    <span style=color:#8b008b;font-weight:700>if</span> boolPtr == <span style=color:#8b008b;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>        <span style=color:#8b008b;font-weight:700>return</span> <span style=color:#8b008b;font-weight:700>false</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#8b008b;font-weight:700>return</span> *boolPtr
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#228b22>// ...</span>
+</span></span></code></pre></div><p>每新增一个类型我们就需要针对这个类型实现一段类似重复的代码，但这些函数的唯一不同点，<strong>实际上只有函数参数的类型和函数响应值的类型不同</strong>。</p><p>而 <strong>泛型(Generics)</strong> 就是给变量的类型也引入“形参&实参”的概念。我们定义函数的时候可以给参数类型定义“类型形参”，在调用函数的时候，我们可以给函数传入类型的实参。如果我们使用泛型，上述的代码实现可以转变为下面这样：</p><div class=highlight><pre tabindex=0 style=background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#228b22>// 定义解引用函数</span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>func</span> FromPtr[T <span style=color:#00688b;font-weight:700>any</span>](anyPtr *T) T {
+</span></span><span style=display:flex><span>	<span style=color:#8b008b;font-weight:700>var</span> zero T
+</span></span><span style=display:flex><span>	<span style=color:#8b008b;font-weight:700>if</span> anyPtr == <span style=color:#8b008b;font-weight:700>nil</span> {
+</span></span><span style=display:flex;background-color:#d6d6c6><span>		<span style=color:#8b008b;font-weight:700>return</span> zero
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#8b008b;font-weight:700>return</span> *anyPtr
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>对于不同的类型，我们都只需要调用这一个<code>泛型函数</code>即可。</p><div class=highlight><pre tabindex=0 style=background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#228b22>// 调用解引用函数</span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>func</span> <span style=color:#008b45>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#8b008b;font-weight:700>var</span> intPtr *<span style=color:#00688b;font-weight:700>int</span>
+</span></span><span style=display:flex><span>	<span style=color:#8b008b;font-weight:700>var</span> strPtr *<span style=color:#00688b;font-weight:700>string</span>
+</span></span><span style=display:flex;background-color:#d6d6c6><span>	<span style=color:#8b008b;font-weight:700>var</span> boolPtr *<span style=color:#00688b;font-weight:700>bool</span>
+</span></span><span style=display:flex><span>	a := <span style=color:#b452cd>1</span>
+</span></span><span style=display:flex><span>	b := <span style=color:#cd5555>&#34;str&#34;</span>
+</span></span><span style=display:flex><span>	c := <span style=color:#8b008b;font-weight:700>true</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#228b22>// 类型实参自动推断，所以不需要我们像下面这样手动传入了</span>
+</span></span><span style=display:flex><span>    <span style=color:#228b22>// fmt.Println(FromPtr[int](intPtr))</span>
+</span></span><span style=display:flex><span>	fmt.<span style=color:#008b45>Println</span>(<span style=color:#008b45>FromPtr</span>(intPtr))  <span style=color:#228b22>// 0</span>
+</span></span><span style=display:flex><span>	fmt.<span style=color:#008b45>Println</span>(<span style=color:#008b45>FromPtr</span>(strPtr))  <span style=color:#228b22>// &#34;&#34;</span>
+</span></span><span style=display:flex><span>	fmt.<span style=color:#008b45>Println</span>(<span style=color:#008b45>FromPtr</span>(boolPtr)) <span style=color:#228b22>// false</span>
+</span></span><span style=display:flex><span>	fmt.<span style=color:#008b45>Println</span>(<span style=color:#008b45>FromPtr</span>(&amp;a))      <span style=color:#228b22>// 1</span>
+</span></span><span style=display:flex><span>	fmt.<span style=color:#008b45>Println</span>(<span style=color:#008b45>FromPtr</span>(&amp;b))      <span style=color:#228b22>// str</span>
+</span></span><span style=display:flex><span>	fmt.<span style=color:#008b45>Println</span>(<span style=color:#008b45>FromPtr</span>(&amp;c))      <span style=color:#228b22>// true</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=自定义容器>自定义容器</h3><p>假设我们想定义一个能够做元素累加的容器<br>以往我们需要为每个基础类型分别定义一个容器，并相应实现对应的累加方法：</p><div class=highlight><pre tabindex=0 style=background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#8b008b;font-weight:700>type</span> IntSlice []<span style=color:#00688b;font-weight:700>int</span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>type</span> StrSlice []<span style=color:#00688b;font-weight:700>string</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>func</span>(s IntSlice) <span style=color:#008b45>AddAll</span>() <span style=color:#00688b;font-weight:700>int</span> {<span style=color:#228b22>/*省略*/</span>}
+</span></span><span style=display:flex;background-color:#d6d6c6><span><span style=color:#8b008b;font-weight:700>func</span>(s StrSlice) <span style=color:#008b45>AddAll</span>() <span style=color:#00688b;font-weight:700>string</span> {<span style=color:#228b22>/*省略*/</span>}
+</span></span></code></pre></div><p>当有了泛型特性之后，我们只需要定义一个<code>泛型类型</code>, 然后实现累加的<code>泛型方法</code>即可:</p><div class=highlight><pre tabindex=0 style=background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#8b008b;font-weight:700>type</span> AnySlice[T <span style=color:#00688b;font-weight:700>int</span> | <span style=color:#00688b;font-weight:700>string</span>] []T
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>func</span> (s AnySlice[T]) <span style=color:#008b45>AddAll</span>() T {
+</span></span><span style=display:flex><span>	<span style=color:#8b008b;font-weight:700>var</span> ret T
+</span></span><span style=display:flex><span>	<span style=color:#8b008b;font-weight:700>for</span> _, elem := <span style=color:#8b008b;font-weight:700>range</span> s {
+</span></span><span style=display:flex;background-color:#d6d6c6><span>		ret += elem
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#8b008b;font-weight:700>return</span> ret
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>我们可以这样使用定义好的<code>泛型类型</code></p><div class=highlight><pre tabindex=0 style=background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-go data-lang=go><span style=display:flex><span>intSlice := AnySlice[<span style=color:#00688b;font-weight:700>int</span>]{<span style=color:#b452cd>1</span>, <span style=color:#b452cd>2</span>, <span style=color:#b452cd>3</span>, <span style=color:#b452cd>4</span>, <span style=color:#b452cd>5</span>}
+</span></span><span style=display:flex><span>strSlice := AnySlice[<span style=color:#00688b;font-weight:700>string</span>]{<span style=color:#cd5555>&#34;str1&#34;</span>, <span style=color:#cd5555>&#34;str2&#34;</span>, <span style=color:#cd5555>&#34;str3&#34;</span>, <span style=color:#cd5555>&#34;str4&#34;</span>, <span style=color:#cd5555>&#34;str5&#34;</span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>fmt.<span style=color:#008b45>Println</span>(intSlice.<span style=color:#008b45>AddAll</span>()) <span style=color:#228b22>// 15</span>
+</span></span><span style=display:flex;background-color:#d6d6c6><span>fmt.<span style=color:#008b45>Println</span>(strSlice.<span style=color:#008b45>AddAll</span>()) <span style=color:#228b22>// str1str2str3str4str5</span>
+</span></span></code></pre></div><h2 id=基本概念>基本概念</h2><p>我们使用上面定义的泛型函数引入一些基本概念</p><div class=highlight><pre tabindex=0 style=background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-go data-lang=go><span style=display:flex><span>    类型参数列表   类型约束
+</span></span><span style=display:flex><span>            |    |
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>func</span> FromPtr[T <span style=color:#00688b;font-weight:700>any</span>](anyPtr *T) T   - 泛型函数
+</span></span><span style=display:flex><span>              <span style=color:#a61717;background-color:#e3d2d2>\</span>            /_/
+</span></span><span style=display:flex;background-color:#d6d6c6><span>                <span style=color:#a61717;background-color:#e3d2d2>\</span> 类型形参 /   
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>   类型实参
+</span></span><span style=display:flex><span>         |
+</span></span><span style=display:flex><span>FromPtr[<span style=color:#00688b;font-weight:700>int</span>](intPtr)               - 泛型函数调用
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    类型参数列表     类型约束
+</span></span><span style=display:flex><span>             |      |
+</span></span><span style=display:flex><span>             |  ------------
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>type</span> AnySlice[T <span style=color:#00688b;font-weight:700>int</span> | <span style=color:#00688b;font-weight:700>string</span>] []T  - 泛型类型
+</span></span><span style=display:flex><span>               <span style=color:#a61717;background-color:#e3d2d2>\</span>               /
+</span></span><span style=display:flex><span>                 <span style=color:#a61717;background-color:#e3d2d2>\</span>  类型形参   /   
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      泛型接收器
+</span></span><span style=display:flex><span>      |
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>func</span> (s AnySlice[T]) <span style=color:#008b45>AddAll</span>() T    - 泛型方法
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    类型实参
+</span></span><span style=display:flex><span>         |
+</span></span><span style=display:flex><span>AnySlice[<span style=color:#00688b;font-weight:700>int</span>]{<span style=color:#b452cd>1</span>, <span style=color:#b452cd>2</span>, <span style=color:#b452cd>3</span>, <span style=color:#b452cd>4</span>, <span style=color:#b452cd>5</span>}       - 泛型类型实例化
+</span></span></code></pre></div><p>Go泛型的大部分基本概念其实和其他拥有泛型特性的语言基本类似，就不再过多赘述，下面针对不太一样的类型约束做一些介绍。</p><h2 id=类型约束type-constraint>类型约束(type constraint)</h2><p>了解类型约束的机制，我们才能明白什么样的类型才能实例化我们定义的泛型。<br>Go语言本身的类型系统比较简单，不像Scala、Kotlin等语言，有诸如协变、逆变等概念，Go的类型是「不变的」，因此下面的代码会在编译期就报错</p><div class=highlight><pre tabindex=0 style=background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#8b008b;font-weight:700>type</span> Container[T A] []T
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>func</span> <span style=color:#008b45>Append</span>(c Container[<span style=color:#00688b;font-weight:700>any</span>]) Container[<span style=color:#00688b;font-weight:700>any</span>] {
+</span></span><span style=display:flex><span>	<span style=color:#8b008b;font-weight:700>return</span> <span style=color:#658b00>append</span>(c, <span style=color:#cd5555>&#34;abc&#34;</span>)
+</span></span><span style=display:flex;background-color:#d6d6c6><span>}
+</span></span><span style=display:flex><span>a := <span style=color:#658b00>make</span>(Container[<span style=color:#00688b;font-weight:700>int</span>], <span style=color:#b452cd>0</span>)
+</span></span><span style=display:flex><span><span style=color:#008b45>Append</span>(a) <span style=color:#228b22>// 编译期报错，cannot use a (variable of type Container[int]) as Container[any] value in argument to Append compilerIncompatibleAssign</span>
+</span></span></code></pre></div><p>Go泛型的类型是通过「类型集」来约束的。下面类型形参后面的部分就是类型约束：</p><div class=highlight><pre tabindex=0 style=background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#8b008b;font-weight:700>func</span> FromPtr[T <span style=color:#00688b;font-weight:700>any</span>](anyPtr *T) T    <span style=color:#228b22>// T 约束为 any, 等同于接受所有类型</span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>type</span> AnySlice[T <span style=color:#00688b;font-weight:700>int</span> | <span style=color:#00688b;font-weight:700>string</span>] []T   <span style=color:#228b22>// T 只接受 int, string</span>
+</span></span></code></pre></div><p>上面的例子中「any」是个类型集，包含了所有的类型。「int | string」也是个类型集，包含了int和string两个类型。</p><p>另外为了使得代码更加容易维护，我们可以通过interface来定义类型集，比如下面这个interface代表所有int类型的类型集：</p><div class=highlight><pre tabindex=0 style=background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#8b008b;font-weight:700>type</span> Int <span style=color:#8b008b;font-weight:700>interface</span> {
+</span></span><span style=display:flex><span>    <span style=color:#00688b;font-weight:700>int</span> | <span style=color:#00688b;font-weight:700>int8</span> | <span style=color:#00688b;font-weight:700>int16</span> | <span style=color:#00688b;font-weight:700>int32</span> | <span style=color:#00688b;font-weight:700>int64</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex;background-color:#d6d6c6><span><span style=color:#228b22>// 然后利用Int来做约束</span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>type</span> GType[T Int] []T
+</span></span></code></pre></div><p>上面的例子中，「Int」接口是int、int8、int16、int32、int64的一个类型集，那么这五个类型都可以去实例化泛型类型「GType」。</p><p>实际上，Go的Specification中已经指明interface定义了一个类型集：<code>An interface type defines a type set</code></p><p>我们知道Go的interface在之前都只能定义接口方法，本次引入泛型后还能定义一组类型。为了保证向前兼容，interface被分成了下面两种。</p><h3 id=基础接口basic-interfaces>基础接口（Basic interfaces）</h3><p>只包含方法的interface。<br>假设类型<code>T</code>实现了基本接口<code>I</code>中定义的全部方法，那么我们称类型<code>T</code>实现了接口<code>I</code>, 类型<code>T</code>满足接口<code>I</code>的类型约束。(有点类似于其他语言中的类型上界的味道)<br>举例：</p><div class=highlight><pre tabindex=0 style=background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#8b008b;font-weight:700>type</span> Type[T Parent] []T  <span style=color:#228b22>// 泛型类型，类型约束为Parent</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>type</span> Parent <span style=color:#8b008b;font-weight:700>interface</span> {
+</span></span><span style=display:flex><span>	<span style=color:#008b45>Func</span>()
+</span></span><span style=display:flex;background-color:#d6d6c6><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>type</span> Child <span style=color:#8b008b;font-weight:700>struct</span> {}
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>func</span> (c Child) <span style=color:#008b45>Func</span>() {}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>type</span> Child1 <span style=color:#8b008b;font-weight:700>struct</span> {}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>var</span> t Type[Child]  <span style=color:#228b22>// ok, 因为Child实现了Parent</span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>var</span> t1 Type[Child1] <span style=color:#228b22>// wrong, Child1没有实现方法Func</span>
+</span></span></code></pre></div><h3 id=一般接口general-interfaces>一般接口（General interfaces）</h3><p>除了包含方法，还会包含<code>t1|t2|…|tn</code>这种形式的类型定义的interface。<br>假设类型<code>T</code>是接口<code>I</code>定义的<code>t1|t2|…|tn</code>中的一个，并且实现了接口<code>I</code>的所有方法。那么我们称类型<code>T</code>实现了接口<code>I</code>, 类型<code>T</code>满足接口<code>I</code>的类型约束。<br>举例：</p><div class=highlight><pre tabindex=0 style=background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#8b008b;font-weight:700>type</span> Type[T Parent] []T  <span style=color:#228b22>// 泛型类型，类型约束为Parent</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>type</span> Parent <span style=color:#8b008b;font-weight:700>interface</span> {
+</span></span><span style=display:flex><span>	Child | Child1
+</span></span><span style=display:flex;background-color:#d6d6c6><span>	<span style=color:#008b45>Func</span>()
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>type</span> Child <span style=color:#8b008b;font-weight:700>struct</span>{}
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>func</span> (c Child) <span style=color:#008b45>Func</span>() {}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>type</span> Child1 <span style=color:#8b008b;font-weight:700>struct</span>{}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>type</span> Child2 <span style=color:#8b008b;font-weight:700>struct</span>{}
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>func</span> (c Child2) <span style=color:#008b45>Func</span>() {}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>var</span> t Type[Child]  <span style=color:#228b22>// ok, 因为Child实现了Parent</span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>var</span> t1 Type[Child1] <span style=color:#228b22>// wrong, Child1没有实现方法Func</span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>var</span> t2 Type[Child2] <span style=color:#228b22>// wrong, Child2实现了方法Func，但不是 Child | Child1 中的一员</span>
+</span></span></code></pre></div><h3 id=类型并集>类型并集</h3><p>一个接口中，每行的类型取并集</p><div class=highlight><pre tabindex=0 style=background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#8b008b;font-weight:700>type</span> IntA <span style=color:#8b008b;font-weight:700>interface</span> {
+</span></span><span style=display:flex><span>    <span style=color:#00688b;font-weight:700>int</span> | <span style=color:#00688b;font-weight:700>int8</span> | <span style=color:#00688b;font-weight:700>int16</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex;background-color:#d6d6c6><span><span style=color:#8b008b;font-weight:700>type</span> IntB <span style=color:#8b008b;font-weight:700>interface</span> {
+</span></span><span style=display:flex><span>    <span style=color:#00688b;font-weight:700>int8</span> | <span style=color:#00688b;font-weight:700>int16</span> | <span style=color:#00688b;font-weight:700>int32</span> | <span style=color:#00688b;font-weight:700>int64</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>type</span> IntC <span style=color:#8b008b;font-weight:700>interface</span> { <span style=color:#228b22>// 等价于 int | int8 | int16 | int32 | int64</span>
+</span></span><span style=display:flex><span>    IntA | IntB
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=类型交集>类型交集</h3><p>一个接口中行之间的类型定义将取交集</p><div class=highlight><pre tabindex=0 style=background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#8b008b;font-weight:700>type</span> IntA <span style=color:#8b008b;font-weight:700>interface</span> {
+</span></span><span style=display:flex><span>    <span style=color:#00688b;font-weight:700>int</span> | <span style=color:#00688b;font-weight:700>int8</span> | <span style=color:#00688b;font-weight:700>int16</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex;background-color:#d6d6c6><span><span style=color:#8b008b;font-weight:700>type</span> IntB <span style=color:#8b008b;font-weight:700>interface</span> {
+</span></span><span style=display:flex><span>    <span style=color:#00688b;font-weight:700>int8</span> | <span style=color:#00688b;font-weight:700>int16</span> | <span style=color:#00688b;font-weight:700>int32</span> | <span style=color:#00688b;font-weight:700>int64</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#8b008b;font-weight:700>type</span> IntC <span style=color:#8b008b;font-weight:700>interface</span> { <span style=color:#228b22>// 等价于 int8 | int16</span>
+</span></span><span style=display:flex><span>    IntA
+</span></span><span style=display:flex><span>    IntB
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=底层类型约束>底层类型约束</h3><p>Go新增了一个符号<code>~</code>, 置于基础类型前的时候，这个类型集合将不止包含这个基础类型，还会包含所有底层类型为该基础类型的类型。<br>比如：</p><div class=highlight><pre tabindex=0 style=background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#8b008b;font-weight:700>type</span> Int <span style=color:#8b008b;font-weight:700>interface</span> {
+</span></span><span style=display:flex><span>    ~<span style=color:#00688b;font-weight:700>int</span> | ~<span style=color:#00688b;font-weight:700>int8</span> | ~<span style=color:#00688b;font-weight:700>int16</span> | ~<span style=color:#00688b;font-weight:700>int32</span> | ~<span style=color:#00688b;font-weight:700>int64</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex;background-color:#d6d6c6><span><span style=color:#8b008b;font-weight:700>type</span> IntType <span style=color:#00688b;font-weight:700>int</span> <span style=color:#228b22>// IntType也满足Int接口定义的类型约束</span>
+</span></span></code></pre></div><h2 id=后续>后续</h2><ul><li>泛型接口</li></ul><hr width=100% id=EOF><p style=color:#777>最后修改于 2022-04-17</p></div></div><nav class=post-pagination><a class=newer-posts href=/posts/%E6%91%98%E5%BD%95/>下回<br>摘录
+</a><a class=older-posts href=/posts/openwrt%E8%B7%91go%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/>上回<br>OpenWRT跑Go定时任务</a></nav><div class=post-comment-wrapper></div></div></div></div></div><div id=sideContainer class=side-container><a class="a-block nav-head false" href=http://ngtrio.com/><div class=nav-title>星河鹭起</div></a><div class=nav-link-list><a class="a-block nav-link-item active" href=/posts>归档 Archive
+</a><a class="a-block nav-link-item false" href=/categories>分类 Categories
+</a><a class="a-block nav-link-item false" href=/tags>标签 Tags</a></div><div class=nav-footer>Hugo Theme <a href=https://github.com/amazingrise/hugo-theme-diary>Diary</a> by <a href=https://risehere.net/>Rise</a><br>移植自 <a href=https://mak1t0.cc/ target=_blank rel="noreferrer noopener">Makito</a>'s <a href=https://github.com/SumiMakito/hexo-theme-journal/ target=_blank rel="noreferrer noopener">Journal.</a><br><br>&copy;
+ngtrio. 本站遵循 CC-BY-NC 4.0 协议</div></div><div id=extraContainer class=extra-container><div class=toc-wrapper><div class=toc><div class=toc-content><center>- 目录 -</center><ul><ul><li><a href=#%e4%bb%8e%e5%b8%b8%e8%a7%81%e7%9a%84%e5%9c%ba%e6%99%af%e8%af%b4%e8%b5%b7 class=nav-从常见的场景说起>从常见的场景说起</a></li><ul><li><a href=#%e5%af%b9%e6%8c%87%e9%92%88%e7%b1%bb%e5%9e%8b%e8%bf%9b%e8%a1%8c%e8%a7%a3%e5%bc%95%e7%94%a8 class=nav-对指针类型进行解引用>对指针类型进行解引用</a></li><li><a href=#%e8%87%aa%e5%ae%9a%e4%b9%89%e5%ae%b9%e5%99%a8 class=nav-自定义容器>自定义容器</a></li></ul><li><a href=#%e5%9f%ba%e6%9c%ac%e6%a6%82%e5%bf%b5 class=nav-基本概念>基本概念</a></li><li><a href=#%e7%b1%bb%e5%9e%8b%e7%ba%a6%e6%9d%9ftype-constraint class=nav-类型约束type-constraint>类型约束(type constraint)</a></li><ul><li><a href=#%e5%9f%ba%e7%a1%80%e6%8e%a5%e5%8f%a3basic-interfaces class=nav-基础接口basic-interfaces>基础接口（Basic interfaces）</a></li><li><a href=#%e4%b8%80%e8%88%ac%e6%8e%a5%e5%8f%a3general-interfaces class=nav-一般接口general-interfaces>一般接口（General interfaces）</a></li><li><a href=#%e7%b1%bb%e5%9e%8b%e5%b9%b6%e9%9b%86 class=nav-类型并集>类型并集</a></li><li><a href=#%e7%b1%bb%e5%9e%8b%e4%ba%a4%e9%9b%86 class=nav-类型交集>类型交集</a></li><li><a href=#%e5%ba%95%e5%b1%82%e7%b1%bb%e5%9e%8b%e7%ba%a6%e6%9d%9f class=nav-底层类型约束>底层类型约束</a></li></ul><li><a href=#%e5%90%8e%e7%bb%ad class=nav-后续>后续</a></li></ul></div></div></div><div class=pagination><a id=globalBackToTop class="pagination-action animated-visibility" href=#top :class="{ invisible: scrollY == 0 }"><i class="material-icons pagination-action-icon">keyboard_arrow_up
+</i></a><a type=button class=pagination-action id=darkModeToggleButton><span class="material-icons pagination-action-icon" id=darkModeToggleIcon>dark_mode</span></a></div></div><div id=single-column-footer>Hugo Theme <a href=https://github.com/amazingrise/hugo-theme-diary>Diary</a> by <a href=https://risehere.net/>Rise</a><br>移植自 <a href=https://mak1t0.cc/ target=_blank rel="noreferrer noopener">Makito</a>'s <a href=https://github.com/SumiMakito/hexo-theme-journal/ target=_blank rel="noreferrer noopener">Journal.</a><br><br>&copy;
+ngtrio. 本站遵循 CC-BY-NC 4.0 协议</div></div><script src=/js/journal.js></script></body></html>

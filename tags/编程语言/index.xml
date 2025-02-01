@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>编程语言 on 星河鹭起</title><link>http://ngtrio.com/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/</link><description>Recent content in 编程语言 on 星河鹭起</description><generator>Hugo</generator><language>en-us</language><copyright>ngtrio. 本站遵循 CC-BY-NC 4.0 协议</copyright><lastBuildDate>Sun, 17 Apr 2022 23:09:41 +0800</lastBuildDate><atom:link href="http://ngtrio.com/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml"/><item><title>Go Generics</title><link>http://ngtrio.com/posts/go-genric/</link><pubDate>Sun, 17 Apr 2022 23:09:41 +0800</pubDate><guid>http://ngtrio.com/posts/go-genric/</guid><description>&lt;p>&lt;img src="images/2022-04-17-15-22-16.png" alt="">&lt;/p>
+&lt;ul>
+&lt;li>Generics&lt;/li>
+&lt;li>Fuzzing&lt;/li>
+&lt;li>Workspaces&lt;/li>
+&lt;li>20% Performance Improvements&lt;/li>
+&lt;/ul>
+&lt;p>本文是对Go1.18的第一个特性：泛型（Generics）做的一些体验总结。&lt;/p>
+&lt;h2 id="从常见的场景说起">从常见的场景说起&lt;/h2>
+&lt;h3 id="对指针类型进行解引用">对指针类型进行解引用&lt;/h3>
+&lt;p>一般我们会像下面这样对不同的类型分别实现对应的解引用函数（不使用反射的情况下）&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8b008b;font-weight:bold">func&lt;/span> &lt;span style="color:#008b45">PtrToString&lt;/span>(strPtr *&lt;span style="color:#00688b;font-weight:bold">string&lt;/span>) &lt;span style="color:#00688b;font-weight:bold">string&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#8b008b;font-weight:bold">if&lt;/span> strPtr == &lt;span style="color:#8b008b;font-weight:bold">nil&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#8b008b;font-weight:bold">return&lt;/span> &lt;span style="color:#cd5555">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#d6d6c6">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#8b008b;font-weight:bold">return&lt;/span> *strPtr
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8b008b;font-weight:bold">func&lt;/span> &lt;span style="color:#008b45">PtrToInt&lt;/span>(intPtr *&lt;span style="color:#00688b;font-weight:bold">int&lt;/span>) &lt;span style="color:#00688b;font-weight:bold">int&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#8b008b;font-weight:bold">if&lt;/span> intPtr == &lt;span style="color:#8b008b;font-weight:bold">nil&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#8b008b;font-weight:bold">return&lt;/span> &lt;span style="color:#b452cd">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#8b008b;font-weight:bold">return&lt;/span> *intPtr
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8b008b;font-weight:bold">func&lt;/span> &lt;span style="color:#008b45">PtrToBool&lt;/span>(boolPtr *&lt;span style="color:#00688b;font-weight:bold">bool&lt;/span>) &lt;span style="color:#00688b;font-weight:bold">bool&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#8b008b;font-weight:bold">if&lt;/span> boolPtr == &lt;span style="color:#8b008b;font-weight:bold">nil&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#8b008b;font-weight:bold">return&lt;/span> &lt;span style="color:#8b008b;font-weight:bold">false&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#8b008b;font-weight:bold">return&lt;/span> *boolPtr
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#228b22">// ...&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>每新增一个类型我们就需要针对这个类型实现一段类似重复的代码，但这些函数的唯一不同点，&lt;strong>实际上只有函数参数的类型和函数响应值的类型不同&lt;/strong>。&lt;/p>
+&lt;p>而 &lt;strong>泛型(Generics)&lt;/strong> 就是给变量的类型也引入“形参&amp;amp;实参”的概念。我们定义函数的时候可以给参数类型定义“类型形参”，在调用函数的时候，我们可以给函数传入类型的实参。如果我们使用泛型，上述的代码实现可以转变为下面这样：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#228b22">// 定义解引用函数&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8b008b;font-weight:bold">func&lt;/span> FromPtr[T &lt;span style="color:#00688b;font-weight:bold">any&lt;/span>](anyPtr *T) T {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#8b008b;font-weight:bold">var&lt;/span> zero T
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#8b008b;font-weight:bold">if&lt;/span> anyPtr == &lt;span style="color:#8b008b;font-weight:bold">nil&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#d6d6c6">&lt;span>		&lt;span style="color:#8b008b;font-weight:bold">return&lt;/span> zero
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#8b008b;font-weight:bold">return&lt;/span> *anyPtr
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>对于不同的类型，我们都只需要调用这一个&lt;code>泛型函数&lt;/code>即可。&lt;/p></description></item><item><title>Go Array&amp;Slice</title><link>http://ngtrio.com/posts/go-array-slice/</link><pubDate>Tue, 05 Oct 2021 16:14:16 +0800</pubDate><guid>http://ngtrio.com/posts/go-array-slice/</guid><description>&lt;h2 id="spec">Spec&lt;/h2>
+&lt;blockquote>
+&lt;p>Array:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">&lt;code class="language-txt" data-lang="txt">&lt;span style="display:flex;">&lt;span>ArrayType = &amp;#34;[&amp;#34; ArrayLength &amp;#34;]&amp;#34; ElementType .
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ArrayLength = Expression .
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ElementType = Type .
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>其中ArrayLength是Array类型的一个组成部分，且必须能够计算为一个非负int类型可“常量表示（&lt;a href="https://golang.org/ref/spec#Constants">constant&lt;/a> &lt;a href="https://golang.org/ref/spec#Representability">representable&lt;/a>）”的值&lt;/p>
+&lt;p>Slice:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">&lt;code class="language-txt" data-lang="txt">&lt;span style="display:flex;">&lt;span>SliceType = &amp;#34;[&amp;#34; &amp;#34;]&amp;#34; ElementType .
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>
+&lt;p>一个Slice只要经过了初始化，就必将和一个底层的Array绑定，绑定在同一个Array上的Slices会共享内存&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>通过make初始化一个Slice的同时会初始化一个隐式的Array，也就是说下面两行代码是等价的：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#658b00">make&lt;/span>([]&lt;span style="color:#00688b;font-weight:bold">int&lt;/span>, &lt;span style="color:#b452cd">50&lt;/span>, &lt;span style="color:#b452cd">100&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#658b00">new&lt;/span>([&lt;span style="color:#b452cd">100&lt;/span>]&lt;span style="color:#00688b;font-weight:bold">int&lt;/span>)[&lt;span style="color:#b452cd">0&lt;/span>:&lt;span style="color:#b452cd">50&lt;/span>]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;/ul>
+&lt;/blockquote>
+&lt;h2 id="arrays">Arrays&lt;/h2>
+&lt;p>Golang的数组类型和C不同：&lt;/p>
+&lt;ol>
+&lt;li>Golang的数组是值，而不像C是数组头指针&lt;/li>
+&lt;li>所以，在给一个函数传数组参树的时候，实际上是传的整个数组的一份copy&lt;/li>
+&lt;li>数组长度是类型的一部分，所以&lt;code>[10]int&lt;/code>和&lt;code>[20]int&lt;/code>是两个不同的类型&lt;/li>
+&lt;/ol>
+&lt;h2 id="slices">Slices&lt;/h2>
+&lt;p>内部表示为一个三元素结构体：&lt;/p>
+&lt;ol>
+&lt;li>ptr：指向底层数组的指针&lt;/li>
+&lt;li>len：Slice长度，表示引用的元素个数&lt;/li>
+&lt;li>cap：Slice容量，从Slice引用的第一个元素到底层数组最后一个元素的数量&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="images/slice-struct.png" alt="img">&lt;/p>
+&lt;p>比如&lt;code>s := make([]int, 5)&lt;/code>，s的表示如下：&lt;/p>
+&lt;p>&lt;img src="images/slice-1.png" alt="img">&lt;/p>
+&lt;p>对s进行切片&lt;code>s = s[2:4]&lt;/code>，s的表示变为下面这样：&lt;/p>
+&lt;p>&lt;img src="images/slice-2.png" alt="img">&lt;/p>
+&lt;p>我们可以在cap范围内进行Slice的扩张，比如：&lt;code>s = s[:cap(s)]&lt;/code>，s的表示变为下面这样：&lt;/p>
+&lt;p>&lt;img src="images/slice-3.png" alt="img">&lt;/p>
+&lt;p>超过cap以及访问底层数组中处于Slice更前的元素都是&lt;strong>不被允许的&lt;/strong>&lt;/p>
+&lt;h4 id="扩容">&lt;strong>扩容&lt;/strong>&lt;/h4>
+&lt;p>当向Slice中添加元素的时候发现底层Array的容量已经不够则会触发扩容，底层Array将发生内存重分配。为了减少内存分配操作，我们应该在初始化Slice的时候尽量给出一个预期的cap大小。&lt;/p>
+&lt;p>扩容逻辑类似与下面这段代码：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#eed;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8b008b;font-weight:bold">func&lt;/span> &lt;span style="color:#008b45">Append&lt;/span>(slice, data []&lt;span style="color:#00688b;font-weight:bold">byte&lt;/span>) []&lt;span style="color:#00688b;font-weight:bold">byte&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> l := &lt;span style="color:#658b00">len&lt;/span>(slice)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#8b008b;font-weight:bold">if&lt;/span> l + &lt;span style="color:#658b00">len&lt;/span>(data) &amp;gt; &lt;span style="color:#658b00">cap&lt;/span>(slice) { &lt;span style="color:#228b22">// reallocate&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#228b22">// Allocate double what&amp;#39;s needed, for future growth.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#d6d6c6">&lt;span> newSlice := &lt;span style="color:#658b00">make&lt;/span>([]&lt;span style="color:#00688b;font-weight:bold">byte&lt;/span>, (l+&lt;span style="color:#658b00">len&lt;/span>(data))*&lt;span style="color:#b452cd">2&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#228b22">// The copy function is predeclared and works for any slice type.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#658b00">copy&lt;/span>(newSlice, slice)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> slice = newSlice
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> slice = slice[&lt;span style="color:#b452cd">0&lt;/span>:l+&lt;span style="color:#658b00">len&lt;/span>(data)]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#658b00">copy&lt;/span>(slice[l:], data)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#8b008b;font-weight:bold">return&lt;/span> slice
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>我们必须将扩容后的Slice返回，因为Slice本身实际上还是值传递（底层字段ptr，len， cap）&lt;/p></description></item><item><title>Scala隐式转换的理解</title><link>http://ngtrio.com/posts/scala%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%90%86%E8%A7%A3/</link><pubDate>Fri, 09 Jul 2021 09:29:32 +0800</pubDate><guid>http://ngtrio.com/posts/scala%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%90%86%E8%A7%A3/</guid><description>&lt;h3 id="将隐式解析看作是方法调用">将隐式解析看作是方法调用&lt;/h3>
+&lt;ul>
+&lt;li>
+&lt;p>隐式参数&lt;/p>
+&lt;p>ImplicitValue: Unit =&amp;gt; RequiredType&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>隐式转换&lt;/p>
+&lt;p>ImplicitValue: GivenType =&amp;gt; RequiredType.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>在方法没有被定义的类型上调用方法&lt;/p>
+&lt;p>ImplicitValue: GivenType =&amp;gt; ???&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="隐式范围implicit-scope定义">隐式范围（implicit scope）定义&lt;/h3>
+&lt;ol>
+&lt;li>
+&lt;p>Current scope&lt;/p>
+&lt;ul>
+&lt;li>Local scope&lt;/li>
+&lt;li>Current Scope defined by Imports (Explicit Imports and Wildcard Imports)&lt;/li>
+&lt;/ul>
+&lt;p>简单的说就是和变量、标识符等的搜索scope是一样的&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Associated Type&lt;/p>
+&lt;ul>
+&lt;li>Function0[RequiredType]&lt;/li>
+&lt;li>Function1[GivenType, RequireType]&lt;/li>
+&lt;li>Function1[GivenType, ???]&lt;/li>
+&lt;/ul>
+&lt;p>隐式范围包括上述涉及到的类型的伴生对象，如果说上述类型是类型构造器，比如说RequiredType[T]，那么T的隐式范围同样会被搜索。GivenType, RequireType的父类/trait（如果有）的伴生对象同样也会被搜索。&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;blockquote>
+&lt;p>参考：&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://www.geekabyte.io/2017/12/implicit-scope-and-implicit-resolution.html">https://www.geekabyte.io/2017/12/implicit-scope-and-implicit-resolution.html&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/blockquote></description></item></channel></rss>

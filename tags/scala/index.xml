@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Scala on 星河鹭起</title><link>http://ngtrio.com/tags/scala/</link><description>Recent content in Scala on 星河鹭起</description><generator>Hugo</generator><language>en-us</language><copyright>ngtrio. 本站遵循 CC-BY-NC 4.0 协议</copyright><lastBuildDate>Fri, 09 Jul 2021 09:29:32 +0800</lastBuildDate><atom:link href="http://ngtrio.com/tags/scala/index.xml" rel="self" type="application/rss+xml"/><item><title>Scala隐式转换的理解</title><link>http://ngtrio.com/posts/scala%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%90%86%E8%A7%A3/</link><pubDate>Fri, 09 Jul 2021 09:29:32 +0800</pubDate><guid>http://ngtrio.com/posts/scala%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%90%86%E8%A7%A3/</guid><description>&lt;h3 id="将隐式解析看作是方法调用">将隐式解析看作是方法调用&lt;/h3>
+&lt;ul>
+&lt;li>
+&lt;p>隐式参数&lt;/p>
+&lt;p>ImplicitValue: Unit =&amp;gt; RequiredType&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>隐式转换&lt;/p>
+&lt;p>ImplicitValue: GivenType =&amp;gt; RequiredType.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>在方法没有被定义的类型上调用方法&lt;/p>
+&lt;p>ImplicitValue: GivenType =&amp;gt; ???&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="隐式范围implicit-scope定义">隐式范围（implicit scope）定义&lt;/h3>
+&lt;ol>
+&lt;li>
+&lt;p>Current scope&lt;/p>
+&lt;ul>
+&lt;li>Local scope&lt;/li>
+&lt;li>Current Scope defined by Imports (Explicit Imports and Wildcard Imports)&lt;/li>
+&lt;/ul>
+&lt;p>简单的说就是和变量、标识符等的搜索scope是一样的&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Associated Type&lt;/p>
+&lt;ul>
+&lt;li>Function0[RequiredType]&lt;/li>
+&lt;li>Function1[GivenType, RequireType]&lt;/li>
+&lt;li>Function1[GivenType, ???]&lt;/li>
+&lt;/ul>
+&lt;p>隐式范围包括上述涉及到的类型的伴生对象，如果说上述类型是类型构造器，比如说RequiredType[T]，那么T的隐式范围同样会被搜索。GivenType, RequireType的父类/trait（如果有）的伴生对象同样也会被搜索。&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;blockquote>
+&lt;p>参考：&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://www.geekabyte.io/2017/12/implicit-scope-and-implicit-resolution.html">https://www.geekabyte.io/2017/12/implicit-scope-and-implicit-resolution.html&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/blockquote></description></item></channel></rss>

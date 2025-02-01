@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>学习 on 星河鹭起</title><link>http://ngtrio.com/categories/%E5%AD%A6%E4%B9%A0/</link><description>Recent content in 学习 on 星河鹭起</description><generator>Hugo</generator><language>en-us</language><copyright>ngtrio. 本站遵循 CC-BY-NC 4.0 协议</copyright><lastBuildDate>Fri, 13 Aug 2021 08:29:23 +0800</lastBuildDate><atom:link href="http://ngtrio.com/categories/%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml"/><item><title>Raft与ZAB对比</title><link>http://ngtrio.com/posts/raft%E4%B8%8Ezab%E5%AF%B9%E6%AF%94/</link><pubDate>Fri, 13 Aug 2021 08:29:23 +0800</pubDate><guid>http://ngtrio.com/posts/raft%E4%B8%8Ezab%E5%AF%B9%E6%AF%94/</guid><description>&lt;h2 id="zab">&lt;strong>ZAB&lt;/strong>&lt;/h2>
+&lt;h3 id="zab节点状态">&lt;strong>ZAB节点状态：&lt;/strong>&lt;/h3>
+&lt;ol>
+&lt;li>LOOKING&lt;/li>
+&lt;li>FOLLOWING&lt;/li>
+&lt;li>LEADING&lt;/li>
+&lt;li>OBSERVING&lt;/li>
+&lt;/ol>
+&lt;h3 id="专有名词">&lt;strong>专有名词&lt;/strong>&lt;/h3>
+&lt;ol>
+&lt;li>electionEpoch：选举的逻辑时钟&lt;/li>
+&lt;li>peerEpoch：每次leader选举完成后会选出一个peerEpoch&lt;/li>
+&lt;li>zxid：每个proposal的唯一id，高32位为peerEpoch低32位为counter&lt;/li>
+&lt;li>lastProcessedZxid：最后一次commit的zxid&lt;/li>
+&lt;/ol>
+&lt;h3 id="理论实现的四个阶段">&lt;strong>理论实现的四个阶段&lt;/strong>&lt;/h3>
+&lt;p>&lt;strong>Phase 0. Leader election&lt;/strong>&lt;/p>
+&lt;p>所有节点最开始都是LOOKING。只要有一个节点得到超半数节点的票数，它就可以当选准 leader。只有到达 Phase 3 准 leader 才会成为真正的 leader。这一阶段的目的是就是为了选出一个准 leader，然后进入下一个阶段。&lt;/p>
+&lt;p>协议并没有规定详细的选举算法。&lt;/p>
+&lt;p>&lt;strong>Phase 1. Discovery&lt;/strong>&lt;/p>
+&lt;p>这个阶段有两个工作&lt;/p>
+&lt;ol>
+&lt;li>获取所有follower的lastZxid确定当前集群中有哪个节点拥有最新数据&lt;/li>
+&lt;li>从所有follower的currentEpoch中选出一个最大的然后自增1得到peerEpoch，并发给所有follower，follower会将自己的acceptEpoch设置为peerEpoch，拒绝一切小于该epoch的请求&lt;/li>
+&lt;/ol>
+&lt;p>&lt;strong>Phase 2. Synchronization&lt;/strong>&lt;/p>
+&lt;p>这个阶段就是根据Discovery阶段找到的最新数据节点，leader会与其同步。&lt;/p>
+&lt;p>&lt;strong>这里发生了follower到leader的数据同步，这是和zookeeper的实现还有raft的实现是不一样的&lt;/strong>&lt;/p>
+&lt;p>同步完成后，会向所有follower同步数据，只有当quorum的follower都完成了数据同步后，其当选为新的leader。&lt;/p>
+&lt;p>&lt;strong>Phase 3 . Broadcast&lt;/strong>&lt;/p>
+&lt;p>到了这个阶段， leader才能对外提供服务，可以进行消息广播。数据同步的过程类似一个2PC，Leader将client发过来的请求生成一个事务proposal，然后发送给Follower，多数Follower应答之后，Leader再发送Commit给全部的Follower让其进行提交。&lt;/p>
+&lt;h3 id="zookeeper的实现">&lt;strong>Zookeeper的实现&lt;/strong>&lt;/h3>
+&lt;p>&lt;strong>Phase 0. Fast Leader Election&lt;/strong>&lt;/p>
+&lt;p>这个阶段相当于是理论实现中的Phase 0，Phase 1的整合。每个节点不断更新自己的票箱，最终能够找到lastZxid最大的节点，并将其推选为leader。&lt;/p>
+&lt;p>这样的实现也避免了sync的时候需要从follower向leader同步数据。&lt;/p>
+&lt;p>成为leader的条件&lt;/p>
+&lt;ul>
+&lt;li>epoch最大&lt;/li>
+&lt;li>zxid最大&lt;/li>
+&lt;li>server id最大&lt;/li>
+&lt;/ul>
+&lt;p>节点在选举开始都默认投票给自己，当接收其他节点的选票时，会根据上面的条件更改自己的选票并重新发送选票给其他节点，当有一个节点的得票超过半数，该节点会设置自己的状态为 leading，其他节点会设置自己的状态为 following。&lt;/p>
+&lt;p>&lt;strong>Phase 1. Recovery&lt;/strong>&lt;/p>
+&lt;p>这个阶段所有的follower都会发送自己的lastZxid到leader。&lt;/p>
+&lt;p>Leader会根据follower的lastZxid和自己的lastZxid进行比较，做出如下三种可能的同步策略：&lt;/p>
+&lt;ol>
+&lt;li>SNAP：如果follower数据太老，已经小于minCommitLog则采取快照同步&lt;/li>
+&lt;li>DIFF：如果follower的lastZxid 处于minCommitLog和maxCommitLog之间，则采取增量同步F.lastZxid-L.lastZxid之间的数据&lt;/li>
+&lt;li>TRUNC：当F.lastZxid比L.lastZxid大时，Leader会让follower删除所有对于的数据&lt;/li>
+&lt;/ol>
+&lt;p>&lt;strong>Phase 2. Broadcast&lt;/strong>&lt;/p></description></item></channel></rss>

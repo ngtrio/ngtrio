@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>分布式 on 星河鹭起</title><link>http://ngtrio.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/</link><description>Recent content in 分布式 on 星河鹭起</description><generator>Hugo</generator><language>en-us</language><copyright>ngtrio. 本站遵循 CC-BY-NC 4.0 协议</copyright><lastBuildDate>Sat, 02 Oct 2021 11:29:06 +0800</lastBuildDate><atom:link href="http://ngtrio.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/index.xml" rel="self" type="application/rss+xml"/><item><title>读DDIA-数据复制</title><link>http://ngtrio.com/posts/ddia/</link><pubDate>Sat, 02 Oct 2021 11:29:06 +0800</pubDate><guid>http://ngtrio.com/posts/ddia/</guid><description>&lt;h2 id="数据复制">数据复制&lt;/h2>
+&lt;p>分布式系统中， 通过数据复制，我们希望达到下列目的：&lt;/p>
+&lt;ul>
+&lt;li>在全球各地数据中心间进行数据复制，使得数据在地理上更加接近用户，降低用户请求延迟&lt;/li>
+&lt;li>提高可用性，当一个节点出现故障，我们有经过数据复制得到的副本继续工作&lt;/li>
+&lt;li>横向扩展，用多个数据一致的节点提供同一个服务，提高吞吐量&lt;/li>
+&lt;/ul>
+&lt;p>目前业界有下面几种数据复制方案：&lt;/p>
+&lt;ol>
+&lt;li>主从复制&lt;/li>
+&lt;li>多主节点复制&lt;/li>
+&lt;li>无主节点复制&lt;/li>
+&lt;/ol>
+&lt;h3 id="主从复制">主从复制&lt;/h3>
+&lt;p>原理简述：&lt;/p>
+&lt;ol>
+&lt;li>指定一个节点为主节点，其他都为从节点，客户端写数据库请求全部路由到主节点，由主节点首先将数据写入本地&lt;/li>
+&lt;li>主节点数据本地写入完成后，将数据更改日志或者更改流发送给所有的从节点，从节点将数据写入本地，同时严格保持与主节点相同的写入数据&lt;/li>
+&lt;li>客户端读数据请求可以路由到全部节点&lt;/li>
+&lt;/ol>
+&lt;p>&lt;strong>注意：从节点只接受读数据请求，写请求由主节点负责&lt;/strong>&lt;/p>
+&lt;p>&lt;img src="images/ddia-1.png" alt="">&lt;/p>
+&lt;p>图1. 基于领导者(主-从)的复制&lt;/p>
+&lt;p>&lt;strong>同步复制 or 异步复制&lt;/strong>&lt;/p>
+&lt;p>&lt;img src="images/ddia-2.png" alt="">&lt;/p>
+&lt;p>图2. Follower 1同步复制节点，Follower 2异步复制节点&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>同步复制&lt;/p>
+&lt;p>用户的一次数据写请求在所有同步复制的从节点被写入后才会得到响应。&lt;/p>
+&lt;ul>
+&lt;li>优点：始终保证主从节点中的数据一致性&lt;/li>
+&lt;li>缺点：只要有任何同步复制节点性能降低甚至故障，用户请求响应时间将大幅增加&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>异步复制&lt;/p>
+&lt;p>用户的一次数据写请求在主节点写入后就会得到响应，主从复制将在后续异步进行&lt;/p>
+&lt;ul>
+&lt;li>优点：即使从节点出现数据复制滞后，主节点依旧能够响应写请求，吞吐量得到保证&lt;/li>
+&lt;li>缺点：万一主节点主线故障下线，数据可能还没来得及复制完毕，导致新上线的主节点（从节点继承）数据丢失&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>半同步&lt;/p>
+&lt;p>在业界实践中，上述两种方案只选其一都太过极端，一般会结合两种复制方式使用：&lt;/p>
+&lt;p>一般存在一个从节点是同步复制，其他从节点是异步复制，万一同步节点不可用，将提升另一个异步节点作为同步节点，这样就保证了一个集群中至少拥有两个数据一致且最新的节点&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>新增节点&lt;/strong>&lt;/p>
+&lt;p>场景：提高容错能力，替换故障节点等&lt;/p>
+&lt;p>原理简述：&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>在某个时间点对主节点生成数据快照&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>将此快照应用到新增节点&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>新增节点连接至主节点，请求快照点（与某个日志顺序点关联）后的数据更改日志&lt;/p>
+&lt;p>PostgreSQL将日志顺序点称为log sequence number，MySQL则称为binlog coordinates&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>获取数据更改日志后，依次应用日志中的数据变更，这一步称为&lt;strong>追赶&lt;/strong>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;p>&lt;strong>处理节点失效&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>从节点失效：追赶式恢复&lt;/p>
+&lt;p>从节点崩溃下线后，又顺利重启，可以通过数据复制日志得知故障前处理的最后一笔事务，然后向主节点请求该事务后发生的所有数据变更日志，并应用到本地，从而&lt;strong>追赶主节点&lt;/strong>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>主节点失效：节点切换&lt;/p>
+&lt;p>原理简述：&lt;/p>
+&lt;ol>
+&lt;li>确认主节点失效。一般基于超时机制判断，节点间心跳包如果超过一段时间没有得到响应，则视为节点失效&lt;/li>
+&lt;li>选举新的主节点。从节点之间选举（超过半数节点达到共识），目标是选举出与主节点数据差异最小的一个从节点提升为主节点。这里涉及到共识算法，常见的有Raft等&lt;/li>
+&lt;li>重新配置系统激活主节点。主要就是客户端的数据写请求现在应该路由到新晋升的主节点。前主节点重新上线后还要确保其降级为从节点，并认可新的主节点&lt;/li>
+&lt;/ol>
+&lt;p>存在的问题：&lt;/p>
+&lt;ol>
+&lt;li>前主节点重新上线后，可能依旧认为自己是主节点，从而会继续尝试同步其他节点，导致新主节点产生写冲突&lt;/li>
+&lt;li>如果数据库需要和其他系统相协调，那么丢弃写入内容是极其危险的操作。比如说一个MySQL集群采用自增作为主键，如果一个数据未完全同步的MySQL从节点晋升为主节点，那么在后续插入行的操作下，新主节点将会重新分配旧主节点已经分配过的主键。倘若外部有一个redis引用了主键字段，就会发生MySQL与redis数据不一致的情况&lt;/li>
+&lt;li>某些故障下，可能会发生多个节点认为自己是主节点，这种现象称为&lt;strong>脑裂（split brain）&lt;/strong>，这样就会导致多个节点可写，最后出现数据冲突的情况&lt;/li>
+&lt;li>节点失效的超时检测机制很难设置一个合适的时间，时间越长代表总体恢复时间越长，时间越短，越可能导致不必要的节点切换&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>复制日志的实现&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>基于语句的复制&lt;/p>
+&lt;p>主节点记录每次写请求所执行的语句，并将语句日志发送给从节点。对于关系数据库，每个INSERT、UPDATE或DELETE语句都会转发给从节点，然后交由从节点执行。&lt;/p>
+&lt;p>有下列几个问题：&lt;/p>
+&lt;ol>
+&lt;li>任何非确定函数语句比如NOW()、RAND()，在不同节点上可能有不同返回值&lt;/li>
+&lt;li>如果语句使用了自增等依赖现有数据的情况，会受到限制&lt;/li>
+&lt;li>有副作用的语句，比如触发器、用户定义函数等，不同节点会产生不同的副作用&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>
+&lt;p>基于预写日志（WAL）传输&lt;/p></description></item><item><title>Raft与ZAB对比</title><link>http://ngtrio.com/posts/raft%E4%B8%8Ezab%E5%AF%B9%E6%AF%94/</link><pubDate>Fri, 13 Aug 2021 08:29:23 +0800</pubDate><guid>http://ngtrio.com/posts/raft%E4%B8%8Ezab%E5%AF%B9%E6%AF%94/</guid><description>&lt;h2 id="zab">&lt;strong>ZAB&lt;/strong>&lt;/h2>
+&lt;h3 id="zab节点状态">&lt;strong>ZAB节点状态：&lt;/strong>&lt;/h3>
+&lt;ol>
+&lt;li>LOOKING&lt;/li>
+&lt;li>FOLLOWING&lt;/li>
+&lt;li>LEADING&lt;/li>
+&lt;li>OBSERVING&lt;/li>
+&lt;/ol>
+&lt;h3 id="专有名词">&lt;strong>专有名词&lt;/strong>&lt;/h3>
+&lt;ol>
+&lt;li>electionEpoch：选举的逻辑时钟&lt;/li>
+&lt;li>peerEpoch：每次leader选举完成后会选出一个peerEpoch&lt;/li>
+&lt;li>zxid：每个proposal的唯一id，高32位为peerEpoch低32位为counter&lt;/li>
+&lt;li>lastProcessedZxid：最后一次commit的zxid&lt;/li>
+&lt;/ol>
+&lt;h3 id="理论实现的四个阶段">&lt;strong>理论实现的四个阶段&lt;/strong>&lt;/h3>
+&lt;p>&lt;strong>Phase 0. Leader election&lt;/strong>&lt;/p>
+&lt;p>所有节点最开始都是LOOKING。只要有一个节点得到超半数节点的票数，它就可以当选准 leader。只有到达 Phase 3 准 leader 才会成为真正的 leader。这一阶段的目的是就是为了选出一个准 leader，然后进入下一个阶段。&lt;/p>
+&lt;p>协议并没有规定详细的选举算法。&lt;/p>
+&lt;p>&lt;strong>Phase 1. Discovery&lt;/strong>&lt;/p>
+&lt;p>这个阶段有两个工作&lt;/p>
+&lt;ol>
+&lt;li>获取所有follower的lastZxid确定当前集群中有哪个节点拥有最新数据&lt;/li>
+&lt;li>从所有follower的currentEpoch中选出一个最大的然后自增1得到peerEpoch，并发给所有follower，follower会将自己的acceptEpoch设置为peerEpoch，拒绝一切小于该epoch的请求&lt;/li>
+&lt;/ol>
+&lt;p>&lt;strong>Phase 2. Synchronization&lt;/strong>&lt;/p>
+&lt;p>这个阶段就是根据Discovery阶段找到的最新数据节点，leader会与其同步。&lt;/p>
+&lt;p>&lt;strong>这里发生了follower到leader的数据同步，这是和zookeeper的实现还有raft的实现是不一样的&lt;/strong>&lt;/p>
+&lt;p>同步完成后，会向所有follower同步数据，只有当quorum的follower都完成了数据同步后，其当选为新的leader。&lt;/p>
+&lt;p>&lt;strong>Phase 3 . Broadcast&lt;/strong>&lt;/p>
+&lt;p>到了这个阶段， leader才能对外提供服务，可以进行消息广播。数据同步的过程类似一个2PC，Leader将client发过来的请求生成一个事务proposal，然后发送给Follower，多数Follower应答之后，Leader再发送Commit给全部的Follower让其进行提交。&lt;/p>
+&lt;h3 id="zookeeper的实现">&lt;strong>Zookeeper的实现&lt;/strong>&lt;/h3>
+&lt;p>&lt;strong>Phase 0. Fast Leader Election&lt;/strong>&lt;/p>
+&lt;p>这个阶段相当于是理论实现中的Phase 0，Phase 1的整合。每个节点不断更新自己的票箱，最终能够找到lastZxid最大的节点，并将其推选为leader。&lt;/p>
+&lt;p>这样的实现也避免了sync的时候需要从follower向leader同步数据。&lt;/p>
+&lt;p>成为leader的条件&lt;/p>
+&lt;ul>
+&lt;li>epoch最大&lt;/li>
+&lt;li>zxid最大&lt;/li>
+&lt;li>server id最大&lt;/li>
+&lt;/ul>
+&lt;p>节点在选举开始都默认投票给自己，当接收其他节点的选票时，会根据上面的条件更改自己的选票并重新发送选票给其他节点，当有一个节点的得票超过半数，该节点会设置自己的状态为 leading，其他节点会设置自己的状态为 following。&lt;/p>
+&lt;p>&lt;strong>Phase 1. Recovery&lt;/strong>&lt;/p>
+&lt;p>这个阶段所有的follower都会发送自己的lastZxid到leader。&lt;/p>
+&lt;p>Leader会根据follower的lastZxid和自己的lastZxid进行比较，做出如下三种可能的同步策略：&lt;/p>
+&lt;ol>
+&lt;li>SNAP：如果follower数据太老，已经小于minCommitLog则采取快照同步&lt;/li>
+&lt;li>DIFF：如果follower的lastZxid 处于minCommitLog和maxCommitLog之间，则采取增量同步F.lastZxid-L.lastZxid之间的数据&lt;/li>
+&lt;li>TRUNC：当F.lastZxid比L.lastZxid大时，Leader会让follower删除所有对于的数据&lt;/li>
+&lt;/ol>
+&lt;p>&lt;strong>Phase 2. Broadcast&lt;/strong>&lt;/p></description></item></channel></rss>
