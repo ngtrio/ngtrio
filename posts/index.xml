@@ -1,15 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 星河鹭起</title><link>http://ngtrio.com/posts/</link><description>Recent content in Posts on 星河鹭起</description><generator>Hugo</generator><language>en-us</language><copyright>ngtrio. 本站遵循 CC-BY-NC 4.0 协议</copyright><lastBuildDate>Sat, 15 Oct 2022 20:48:46 +0800</lastBuildDate><atom:link href="http://ngtrio.com/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>摘录</title><link>http://ngtrio.com/posts/%E6%91%98%E5%BD%95/</link><pubDate>Sat, 15 Oct 2022 20:48:46 +0800</pubDate><guid>http://ngtrio.com/posts/%E6%91%98%E5%BD%95/</guid><description>&lt;ul>
-&lt;li>clowwindy&lt;a href="https://github.com/shadowsocks/shadowsocks-windows/issues/293#issuecomment-132253168">针对ssr闭源的评价&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;blockquote>
-&lt;p>那是自然的咯。这边加了什么功能，它马上扒过去合并了。它那边加了什么却不会贡献出来给其他人用，久而久之，不就是它那边功能更多了吗。&lt;/p>
-&lt;p>一直以来我什么都没说是因为我对他还有点希望，所以得给他一点面子不是。一开始我还只是纳闷他为什么不发 pull request，过了一段时间我才明白，这个世界上也有这一类的人。不尊重 GPL 就算了，把作者名字换成自己的，还在主页上加上官方的字样。为什么我们这边反而不说官方呢？因为我希望这个项目是没有官方的，人人都是贡献者。想不到这个社会人人都围着官转，人人都巴不得当官 。&lt;/p>
-&lt;p>既然他没有尊重别人劳动成果的意愿，那他那些不开源的理由想必也只是借口。说因为加了一些试验性功能会不兼容所以暂不开源。他弄了一个混淆 TCP 协议头功能，在界面上标注提升安全性，吸引用户打开，然后安装他自己的不兼容服务端。然而我分析了一下之后发现这个功能的设计就是想当然，用得多了以后反而会增加特征。如果你真有什么试验性功能，不是更应该开放出来让所有人帮你分析么，大家一起讨论么？在加密算法领域，只有经过足够多人和机构的审视的算法，才能视作是安全的，闭门造出来的怎么能用。。&lt;/p>
-&lt;p>当然啦，大部分用户才不会管这些，他们不会分析你是不是真的安全，也不会做道德判断，只要他们觉得好用就行。所以可以看到，这种环境下开源其实并没有什么优势，只不过为一些人抄袭提供了便利。这种环境下最后留下来的都是这些人。&lt;/p>
-&lt;p>我一直想象的那种大家一起来维护一个项目的景象始终没有出现，也没有出现的迹象。维护这个项目的过程中，遇到 @chenshaoju 这样主动分享的同学并不多。很多来汇报问题的人是以一种小白求大大解决问题，解决完就走人的方式来的，然而既不愿提供足够的信息，也不愿写一些自己尝试的过程供后人参考。互帮互助的气氛就是搞不起来。对比下国外的社区差好远。&lt;/p>
-&lt;p>&lt;strong>最适合这个民族的其实是一群小白围着大大转，大大通过小白的夸奖获得自我满足，然后小白的吃喝拉撒都包给大大解决的模式。通过这个项目我感觉我已经彻底认识到这个民族的前面为什么会有一堵墙了。没有墙哪来的大大。所以到处都是什么附件回帖可见，等级多少用户组可见，一个论坛一个大大供小白跪舔，不需要政府造墙，网民也会自发造墙。这尼玛连做个翻墙软件都要造墙，真是令人叹为观止。这是一个造了几千年墙的保守的农耕民族，缺乏对别人的基本尊重，不愿意分享，喜欢遮遮掩掩，喜欢小圈子抱团，大概这些传统是改不掉了吧。&lt;/strong>&lt;/p>
-&lt;p>现在维护这些项目已经越来越让我感到无趣。我还是努力工作，好好养家，早日肉翻吧。&lt;/p>
-&lt;/blockquote></description></item><item><title>Go Generics</title><link>http://ngtrio.com/posts/go-genric/</link><pubDate>Sun, 17 Apr 2022 23:09:41 +0800</pubDate><guid>http://ngtrio.com/posts/go-genric/</guid><description>&lt;p>&lt;img src="images/2022-04-17-15-22-16.png" alt="">&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 星河鹭起</title><link>http://ngtrio.com/posts/</link><description>Recent content in Posts on 星河鹭起</description><generator>Hugo</generator><language>en-us</language><copyright>ngtrio. 本站遵循 CC-BY-NC 4.0 协议</copyright><lastBuildDate>Sun, 17 Apr 2022 23:09:41 +0800</lastBuildDate><atom:link href="http://ngtrio.com/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Go Generics</title><link>http://ngtrio.com/posts/go-genric/</link><pubDate>Sun, 17 Apr 2022 23:09:41 +0800</pubDate><guid>http://ngtrio.com/posts/go-genric/</guid><description>&lt;p>&lt;img src="images/2022-04-17-15-22-16.png" alt="">&lt;/p>
 &lt;ul>
 &lt;li>Generics&lt;/li>
 &lt;li>Fuzzing&lt;/li>
