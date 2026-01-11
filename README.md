@@ -1,11 +1,15 @@
 <!--START_SECTION:waka-->
-![Code Time](http://img.shields.io/badge/Code%20Time-1%2C087%20hrs%203%20mins-blue?style=flat)
+![Code Time](http://img.shields.io/badge/Code%20Time-1%2C087%20hrs%2039%20mins-blue?style=flat)
 
 📊 **This Week I Spent My Time On** 
 
 ```text
 💬 Programming Languages: 
-No Activity Tracked This Week
+Python                   16 mins             ████████████░░░░░░░░░░░░░   47.25 % 
+Text                     14 mins             ██████████░░░░░░░░░░░░░░░   40.51 % 
+CSV                      1 min               █░░░░░░░░░░░░░░░░░░░░░░░░   04.30 % 
+TypeScript               1 min               █░░░░░░░░░░░░░░░░░░░░░░░░   04.25 % 
+Other                    1 min               █░░░░░░░░░░░░░░░░░░░░░░░░   03.56 % 
 ```
 
 
