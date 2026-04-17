@@ -5,11 +5,11 @@
 
 ```text
 💬 Programming Languages: 
-TypeScript               11 hrs 45 mins      █████████████░░░░░░░░░░░░   50.08 % 
-Other                    4 hrs 53 mins       █████░░░░░░░░░░░░░░░░░░░░   20.82 % 
-Markdown                 3 hrs 43 mins       ████░░░░░░░░░░░░░░░░░░░░░   15.84 % 
-JSON                     1 hr 13 mins        █░░░░░░░░░░░░░░░░░░░░░░░░   05.25 % 
-JavaScript               55 mins             █░░░░░░░░░░░░░░░░░░░░░░░░   03.95 % 
+TypeScript               11 hrs 38 mins      █████████████░░░░░░░░░░░░   52.32 % 
+Other                    4 hrs 41 mins       █████░░░░░░░░░░░░░░░░░░░░   21.11 % 
+Markdown                 2 hrs 49 mins       ███░░░░░░░░░░░░░░░░░░░░░░   12.67 % 
+JSON                     1 hr 12 mins        █░░░░░░░░░░░░░░░░░░░░░░░░   05.45 % 
+JavaScript               55 mins             █░░░░░░░░░░░░░░░░░░░░░░░░   04.16 % 
 ```
 
 
