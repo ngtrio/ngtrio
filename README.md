@@ -1,15 +1,15 @@
 <!--START_SECTION:waka-->
-![Code Time](http://img.shields.io/badge/Code%20Time-1%2C207%20hrs%2019%20mins-blue?style=flat)
+![Code Time](http://img.shields.io/badge/Code%20Time-1%2C218%20hrs%2025%20mins-blue?style=flat)
 
 📊 **This Week I Spent My Time On** 
 
 ```text
 💬 Programming Languages: 
-TypeScript               11 hrs 8 mins       ████████████░░░░░░░░░░░░░   46.21 % 
-CSS                      4 hrs 31 mins       █████░░░░░░░░░░░░░░░░░░░░   18.77 % 
-Other                    3 hrs 4 mins        ███░░░░░░░░░░░░░░░░░░░░░░   12.75 % 
-JSON                     2 hrs 44 mins       ███░░░░░░░░░░░░░░░░░░░░░░   11.38 % 
-Markdown                 1 hr 41 mins        ██░░░░░░░░░░░░░░░░░░░░░░░   06.98 % 
+TypeScript               16 hrs 54 mins      █████████████░░░░░░░░░░░░   52.25 % 
+Other                    5 hrs 54 mins       █████░░░░░░░░░░░░░░░░░░░░   18.24 % 
+CSS                      4 hrs 20 mins       ███░░░░░░░░░░░░░░░░░░░░░░   13.41 % 
+JSON                     2 hrs 25 mins       ██░░░░░░░░░░░░░░░░░░░░░░░   07.51 % 
+Markdown                 2 hrs 19 mins       ██░░░░░░░░░░░░░░░░░░░░░░░   07.18 % 
 ```
 
 
