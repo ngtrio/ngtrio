@@ -1,15 +1,15 @@
 <!--START_SECTION:waka-->
-![Code Time](http://img.shields.io/badge/Code%20Time-1%2C485%20hrs%2051%20mins-blue?style=flat)
+![Code Time](http://img.shields.io/badge/Code%20Time-1%2C486%20hrs%2014%20mins-blue?style=flat)
 
 📊 **This Week I Spent My Time On** 
 
 ```text
 💬 Programming Languages: 
-Markdown                 4 hrs 45 mins       ██████████████░░░░░░░░░░░   54.77 % 
-YAML                     57 mins             ███░░░░░░░░░░░░░░░░░░░░░░   10.95 % 
-JSON                     54 mins             ███░░░░░░░░░░░░░░░░░░░░░░   10.45 % 
-Python                   40 mins             ██░░░░░░░░░░░░░░░░░░░░░░░   07.84 % 
-TypeScript               39 mins             ██░░░░░░░░░░░░░░░░░░░░░░░   07.59 % 
+Markdown                 5 hrs 7 mins        ██████████████░░░░░░░░░░░   56.61 % 
+YAML                     57 mins             ███░░░░░░░░░░░░░░░░░░░░░░   10.51 % 
+JSON                     54 mins             ███░░░░░░░░░░░░░░░░░░░░░░   10.02 % 
+Python                   40 mins             ██░░░░░░░░░░░░░░░░░░░░░░░   07.53 % 
+TypeScript               39 mins             ██░░░░░░░░░░░░░░░░░░░░░░░   07.28 % 
 ```
 
 
