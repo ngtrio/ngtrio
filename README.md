@@ -7,8 +7,7 @@
 
 ```text
 💬 Programming Languages: 
-Rust                     27 mins             █████████████████████████   98.92 % 
-TOML                     0 secs              ░░░░░░░░░░░░░░░░░░░░░░░░░   01.08 % 
+No Activity Tracked This Week
 ```
 
 🤖 **AI Coding This Week** 
